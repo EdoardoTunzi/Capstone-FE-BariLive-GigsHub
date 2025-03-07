@@ -15,17 +15,17 @@ const Footer = () => {
         <Col md={4}>
           <Nav className="justify-content-center">
             <Nav.Item>
-              <Nav.Link href={"/"} className="px-2 text-body-secondary">
+              <Nav.Link href={"/"} className="px-2 text-black">
                 Home
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="#" className="px-2 text-body-secondary">
+              <Nav.Link href="#" className="px-2 text-black">
                 Eventi
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link href="#" className="px-2 text-body-secondary">
+              <Nav.Link href="#" className="px-2 text-black">
                 Artisti
               </Nav.Link>
             </Nav.Item>

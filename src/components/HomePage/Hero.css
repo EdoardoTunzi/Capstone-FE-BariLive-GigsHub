@@ -1,0 +1,8 @@
+.hero1 {
+  img {
+    width: 30rem;
+    /* border-radius: 19% 81% 15% 85% / 77% 29% 71% 23%; */
+
+    margin: 40px;
+  }
+}
