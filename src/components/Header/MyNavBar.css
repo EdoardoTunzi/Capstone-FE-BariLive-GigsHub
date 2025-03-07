@@ -1,4 +1,4 @@
-a:hover {
+.navbarCustom .nav-link:hover {
   font-size: 18px;
   color: white;
 }
