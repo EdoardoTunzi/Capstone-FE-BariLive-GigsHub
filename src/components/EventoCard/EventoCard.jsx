@@ -12,6 +12,7 @@ const EventoCard = ({ evento }) => {
     return formattedDate.replace(/^\w/, (c) => c.toUpperCase());
   };
 
+  //IMPLEMENTA MODALE DETTAGLI EVENTO ! TANTO LO UTLIZZERAI ANCHE NELLA PAGINA EVENTI
   return (
     <Card className="border-0 eventCard">
       <Card.Img variant="top" src={evento.locandina} className="rounded-4" />
