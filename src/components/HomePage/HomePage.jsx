@@ -1,5 +1,5 @@
 import Hero from "./Hero/Hero";
-import MostPopularGrid from "./MostPopularGrid";
+import MostPopularGrid from "./MostPopular/MostPopularGrid";
 
 const HomePage = () => {
   return (
