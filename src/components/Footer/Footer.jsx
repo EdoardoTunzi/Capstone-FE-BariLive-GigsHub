@@ -1,15 +1,17 @@
 import { Col, Container, Nav, Row } from "react-bootstrap";
 import { Facebook, Instagram, Twitter } from "react-bootstrap-icons";
+import "./Footer.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
-    <Container fluid className="border-top py-3 my-4">
+    <Container fluid className="border-top py-3 my-4 footer">
       <Row className="d-flex flex-wrap justify-content-between align-items-center">
         <Col md={4} className="d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto">
-          <a href="#home">
+          <Link to={"/"}>
             <img src="/src/assets/mascotteGifWhite.gif" alt="mascotte gif " style={{ width: 100 }} />
-          </a>
+          </Link>
         </Col>
 
         <Col md={4}>

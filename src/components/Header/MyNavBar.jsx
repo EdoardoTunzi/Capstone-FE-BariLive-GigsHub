@@ -13,7 +13,7 @@ const MyNavBar = () => {
     <>
       <Navbar className="navbarCustom px-4 py-2" expand="md" bg="black" data-bs-theme="dark">
         <Container fluid>
-          <Navbar.Brand href="#home">
+          <Navbar.Brand>
             <Link to={"/"}>
               <img src="/src/assets/logoBianco.png" alt="BariLive logo" style={{ width: 180 }} />
             </Link>
@@ -48,11 +48,11 @@ const MyNavBar = () => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="username">
-              <Form.Label htmlFor="username">Username</Form.Label>
+              <Form.Label>Username</Form.Label>
               <Form.Control type="text" placeholder="Username" id="username" autoFocus />
             </Form.Group>
             <Form.Group className="mb-3" controlId="password">
-              <Form.Label htmlFor="password">Password</Form.Label>
+              <Form.Label>Password</Form.Label>
               <Form.Control className="shadow-black bs-dark-border-subtle" type="password" placeholder="Password" id="password" rows={3} />
             </Form.Group>
           </Form>
@@ -61,7 +61,7 @@ const MyNavBar = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="dark" onClick={handleClose}>
+          <Button variant="dark" type="submit" onClick={handleClose}>
             LOGIN
           </Button>
         </Modal.Footer>
