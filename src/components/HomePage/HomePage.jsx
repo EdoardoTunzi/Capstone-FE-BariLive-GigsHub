@@ -1,9 +1,11 @@
-import Hero from "./Hero";
+import Hero from "./Hero/Hero";
+import MostPopularGrid from "./MostPopularGrid";
 
 const HomePage = () => {
   return (
     <>
       <Hero />
+      <MostPopularGrid />
     </>
   );
 };
