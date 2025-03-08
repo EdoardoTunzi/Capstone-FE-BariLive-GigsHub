@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Container, Row } from "react-bootstrap";
-import EventoCard from "../EventoCard";
+import { Col, Container, Row } from "react-bootstrap";
+import EventoCard from "../EventoCard/EventoCard";
 
 const MostPopularGrid = () => {
   const [eventi, setEventi] = useState([]);
@@ -29,15 +29,18 @@ const MostPopularGrid = () => {
   }, []);
 
   return (
-    <Container fluid className="p-4">
-      <Row xs={1} sm={2} md={3} lg={4} xl={5} className="justify-content-center gap-4 mb-4">
-        {eventi.map((evento) => (
-          <Col key={evento.id}>
-            <EventoCard evento={evento} />
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <>
+      <Container fluid className="p-1">
+        <h2 className="text-center text-uppercase my-5">Eventi da non perdere</h2>
+        <Row xs={1} sm={2} md={3} lg={4} xl={5} className="justify-content-center gap-4 mb-4">
+          {eventi.map((evento) => (
+            <Col key={evento.id}>
+              <EventoCard evento={evento} />
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </>
   );
 };
 export default MostPopularGrid;
