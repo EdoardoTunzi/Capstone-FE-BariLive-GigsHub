@@ -2,6 +2,7 @@ import { Card } from "react-bootstrap";
 
 const BandCard = ({ band }) => {
   return (
+    //fix classe eventCard , che eredita da css esterno
     <Card className="border-0 eventCard">
       <Card.Img variant="top" src={band.fotoBand} className="rounded-4" />
       <Card.Body className="rounded-bottom-4 shadow mt-2">

@@ -19,7 +19,11 @@ const EventoCard = ({ evento }) => {
       <Card.Body className="rounded-bottom-4 shadow mt-2">
         <Card.Title className="text-uppercase fs-4">{evento.nome}</Card.Title>
         <div className="d-flex">
-          <Card.Text className="text-capitalize">{evento.location}</Card.Text>
+          <div>
+            <Card.Text className="text-capitalize m-0 fw-bold">{evento.location}</Card.Text>
+            <Card.Text className="text-capitalize">{evento.prezzoIngresso}</Card.Text>
+          </div>
+
           <Card.Text className="text-capitalize ms-auto fs-2 fw-bold">{formatDate(evento.data)}</Card.Text>
         </div>
       </Card.Body>
