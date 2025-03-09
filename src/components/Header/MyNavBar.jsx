@@ -12,7 +12,7 @@ const MyNavBar = () => {
   return (
     <>
       <Navbar className="navbarCustom px-4 py-4 fixed-top" expand="md" bg="black" data-bs-theme="dark">
-        <Container fluid>
+        <Container>
           <Navbar.Brand className="me-5">
             <Link to={"/"}>
               <img src="/src/assets/logoBianco.png" alt="BariLive logo" style={{ width: 180 }} />
@@ -31,7 +31,7 @@ const MyNavBar = () => {
                 ARTISTI
               </Nav.Link>
             </Nav>
-            <Button className=" mt-4 mt-md-0 ms-auto border rounded-pill fw-semi-bold" variant="light" onClick={handleShow}>
+            <Button className=" mt-4 mt-md-0 ms-auto border rounded-pill fw-semi-bold fs-5 px-4" variant="light" onClick={handleShow}>
               LOGIN
             </Button>
           </Navbar.Collapse>

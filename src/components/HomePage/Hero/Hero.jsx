@@ -17,7 +17,7 @@ const Hero = () => {
               <span className="fw-bold text-black">Scopri la scena live di Bari.</span> Tutti i concerti, in un solo posto!
             </h1>
             <div className="p-5">
-              <Button variant="dark" className="rounded-3 fs-4 px-4 bg-black" onClick={handleShow}>
+              <Button variant="dark" className="rounded-3 fs-3 px-4 bg-black" onClick={handleShow}>
                 Registrati ora
               </Button>
             </div>

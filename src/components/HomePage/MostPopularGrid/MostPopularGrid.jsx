@@ -30,10 +30,10 @@ const MostPopularGrid = () => {
   }, []);
 
   return (
-    <Container fluid className="p-5">
+    <Container className="mt-5 p-0">
       <div className="d-flex align-items-start mb-4 border-bottom border-black border-5 pb-3">
         <h2 className="fs-1">Eventi popolari</h2>
-        <Button variant="dark" href={"/eventi"} className="ms-auto fs-4 bg-black">
+        <Button variant="dark" href={"/eventi"} className="ms-auto fs-5 bg-black">
           Vedi tutti
         </Button>
       </div>

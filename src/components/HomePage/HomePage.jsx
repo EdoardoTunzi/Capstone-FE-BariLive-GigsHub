@@ -1,3 +1,4 @@
+import { Container } from "react-bootstrap";
 import BandGrid from "./BandGrid/BandGrid";
 import Hero from "./Hero/Hero";
 import MostPopularGrid from "./MostPopularGrid/MostPopularGrid";
@@ -5,9 +6,11 @@ import MostPopularGrid from "./MostPopularGrid/MostPopularGrid";
 const HomePage = () => {
   return (
     <>
-      <Hero />
-      <BandGrid />
-      <MostPopularGrid />
+      <Container>
+        <Hero />
+        <BandGrid />
+        <MostPopularGrid />
+      </Container>
     </>
   );
 };
