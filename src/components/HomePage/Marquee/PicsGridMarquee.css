@@ -1,0 +1,34 @@
+/* .marquee .rfm-child {
+  max-width: 250px;
+  max-height: 150px;
+}
+ */
+.marquee {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  gap: 5px;
+  margin-bottom: -80px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Adatta l'immagine */
+  }
+}
+.marquee-item {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+}
+.img1 {
+  transform: rotate(-5deg) translateY(-10px);
+}
+
+.img2 {
+  transform: rotate(3deg) translateY(5px);
+}
+
+.img3 {
+  transform: rotate(-3deg) translateY(15px);
+}

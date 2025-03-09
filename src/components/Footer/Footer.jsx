@@ -7,7 +7,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   return (
     <Container fluid className="py-4 mt-4 bg-black text-white">
-      <Container>
+      <Container className="mt-5">
         <Row className="d-flex flex-wrap justify-content-between align-items-center">
           <Col md={4} className="d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto">
             <Link to={"/"}>
