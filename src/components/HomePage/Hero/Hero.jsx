@@ -10,7 +10,7 @@ const Hero = () => {
 
   return (
     <>
-      <Container fluid className="hero1">
+      <Container fluid className="hero1 ">
         <div className="d-flex justify-content-center align-items-center hero1">
           <div className="text-center p-5">
             <h1 className="display-3 fw-semi-bold text-white">

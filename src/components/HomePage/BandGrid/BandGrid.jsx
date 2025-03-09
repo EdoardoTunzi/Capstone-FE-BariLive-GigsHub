@@ -31,7 +31,7 @@ const BandGrid = () => {
   return (
     <Container className="mt-5 p-0">
       <div className="d-flex align-items-start mb-4 border-bottom border-black border-5 pb-3">
-        <h2 className="fs-1">Artisti del momento</h2>
+        <h2 className="fs-2">Artisti del momento</h2>
         <Button variant="dark" href={"/artisti"} className="ms-auto fs-5 bg-black">
           Vedi tutti
         </Button>

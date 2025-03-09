@@ -15,8 +15,8 @@ const EventoCard = ({ evento }) => {
   //IMPLEMENTA MODALE DETTAGLI EVENTO ! TANTO LO UTLIZZERAI ANCHE NELLA PAGINA EVENTI
   return (
     <Card className="border-0 eventCard">
-      <Card.Img variant="top" src={evento.locandina} className="rounded-4" />
-      <Card.Body className="rounded-bottom-4 shadow mt-2">
+      <Card.Img variant="top" src={evento.locandina} className="rounded-0" />
+      <Card.Body className="p-0 mt-2">
         <Card.Title className="text-uppercase fs-4">{evento.nome}</Card.Title>
         <div className="d-flex">
           <div>

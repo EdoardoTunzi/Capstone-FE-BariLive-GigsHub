@@ -1,19 +1,15 @@
-/* .marquee .rfm-child {
-  max-width: 250px;
-  max-height: 150px;
-}
- */
 .marquee {
   display: flex;
   align-items: center;
   overflow: hidden;
   gap: 5px;
   margin-bottom: -80px;
+  margin-top: 90px;
 
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Adatta l'immagine */
+    object-fit: cover;
   }
 }
 .marquee-item {
