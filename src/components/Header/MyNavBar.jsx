@@ -84,13 +84,18 @@ const MyNavBar = () => {
                 <Nav.Link as={Link} to={"/artisti"} className="text-white ">
                   ARTISTI
                 </Nav.Link>
+                {user && user.ruolo == "ADMIN" && (
+                  <Nav.Link as={Link} to={"/backoffice"} className="text-white ">
+                    BACKOFFICE
+                  </Nav.Link>
+                )}
               </Nav>
               {user ? (
                 <div className="text-center text-md-start mt-4 mt-md-0 ms-auto">
                   <Button className="  border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/me"}>
                     BACHECA{" "}
                   </Button>
-                  <img className="rounded-circle border border-2 border-black ms-3" src={user.avatar} alt="avatar del profilo utente" style={{ width: 50 }} />
+                  <img className="rounded-circle border border-3 border-white ms-3" src={user.avatar} alt="avatar del profilo utente" style={{ width: 50 }} />
                 </div>
               ) : (
                 <Button className=" mt-4 mt-md-0 ms-auto border rounded-pill fw-semi-bold fs-5 px-4" variant="light" onClick={handleShow}>
