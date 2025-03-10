@@ -15,7 +15,7 @@ const MostPopularGrid = () => {
           console.log(eventi);
           setEventi(eventi.content);
         } else {
-          console.log("Error: data not found");
+          console.log("Errore: eventi non trovati");
         }
       } else {
         throw new Error("Error in fetching events data");

@@ -92,8 +92,8 @@ const MyNavBar = () => {
               </Nav>
               {user ? (
                 <div className="text-center text-md-start mt-4 mt-md-0 ms-auto">
-                  <Button className="  border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/me"}>
-                    BACHECA{" "}
+                  <Button className="  border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/bacheca"}>
+                    My HUB{" "}
                   </Button>
                   <img className="rounded-circle border border-3 border-white ms-3" src={user.avatar} alt="avatar del profilo utente" style={{ width: 50 }} />
                 </div>
