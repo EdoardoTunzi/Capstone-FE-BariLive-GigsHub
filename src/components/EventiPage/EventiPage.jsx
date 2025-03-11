@@ -74,66 +74,68 @@ const EventiPage = () => {
   }, []);
 
   return (
-    <Container className="mx-auto px-5 px-sm-0 container-vh">
-      <h1 className="mt-5">Eventi</h1>
+    <div className="mb-5">
+      <Container className="mx-auto px-5 px-sm-0 container-vh">
+        <h1 className="mt-5">Eventi</h1>
 
-      {/* Sezione Bottoni Filtri */}
-      <div className="d-flex gap-2 mt-3 flex-wrap">
-        <Button className="p-2 px-3" variant="dark" onClick={resetFiltri} disabled={!isFiltered}>
-          Tutti
-        </Button>
-        <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("data")}>
-          <CalendarDate /> Data
-        </Button>
-        <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("band")}>
-          <MusicNote /> Artista
-        </Button>
-        <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("location")}>
-          <GeoAlt /> Location
-        </Button>
-        <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("nome")}>
-          <Type /> Nome
-        </Button>
-      </div>
-
-      {/* Barra di ricerca visibile solo se è selezionato un filtro */}
-      {filtro && (
-        <Form
-          className="mt-3 d-flex  mt-5 mb-5 searchbar-eventi"
-          onSubmit={(e) => {
-            e.preventDefault();
-            getEventiByFiltro();
-          }}
-        >
-          <Form.Control
-            type={filtro === "data" ? "date" : "text"}
-            placeholder={`Cerca per ${filtro}`}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <Button type="submit" variant="dark" className="ms-2">
-            Cerca
+        {/* Sezione Bottoni Filtri */}
+        <div className="d-flex gap-2 mt-3 flex-wrap">
+          <Button className="p-2 px-3" variant="dark" onClick={resetFiltri} disabled={!isFiltered}>
+            Tutti
           </Button>
-        </Form>
-      )}
+          <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("data")}>
+            <CalendarDate /> Data
+          </Button>
+          <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("band")}>
+            <MusicNote /> Artista
+          </Button>
+          <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("location")}>
+            <GeoAlt /> Location
+          </Button>
+          <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("nome")}>
+            <Type /> Nome
+          </Button>
+        </div>
 
-      {/* Lista Eventi */}
-      {loading ? (
-        <LoadingSpinner />
-      ) : (
-        <Row className="gy-4 mt-3 border-top border-black border-4">
-          {eventi.length > 0 ? (
-            eventi.map((evento) => (
-              <Col key={evento.id} lg={2} md={3} sm={6}>
-                <EventoCard evento={evento} />
-              </Col>
-            ))
-          ) : (
-            <p className="mt-3 text-uppercase">Nessun evento trovato.</p>
-          )}
-        </Row>
-      )}
-    </Container>
+        {/* Barra di ricerca visibile solo se è selezionato un filtro */}
+        {filtro && (
+          <Form
+            className="mt-3 d-flex  mt-5 mb-5 searchbar-eventi"
+            onSubmit={(e) => {
+              e.preventDefault();
+              getEventiByFiltro();
+            }}
+          >
+            <Form.Control
+              type={filtro === "data" ? "date" : "text"}
+              placeholder={`Cerca per ${filtro}`}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <Button type="submit" variant="dark" className="ms-2">
+              Cerca
+            </Button>
+          </Form>
+        )}
+
+        {/* Lista Eventi */}
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <Row className="gy-4 mt-3 border-top border-black border-4">
+            {eventi.length > 0 ? (
+              eventi.map((evento) => (
+                <Col key={evento.id} lg={2} md={3} sm={6}>
+                  <EventoCard evento={evento} />
+                </Col>
+              ))
+            ) : (
+              <p className="mt-3 text-uppercase">Nessun evento trovato.</p>
+            )}
+          </Row>
+        )}
+      </Container>
+    </div>
   );
 };
 
