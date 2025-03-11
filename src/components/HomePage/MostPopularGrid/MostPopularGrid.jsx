@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import EventoCard from "../../EventoCard/EventoCard";
 import "./MostPopularGrid.css";
+import LoadingSpinner from "../../Spinner/LoadingSpinner";
 
 const MostPopularGrid = () => {
   const [eventi, setEventi] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const fetchMostPopularEvents = async () => {
+    setLoading(true);
     try {
       let response = await fetch("http://localhost:8080/eventi/top");
       if (response.ok) {
@@ -22,6 +25,8 @@ const MostPopularGrid = () => {
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false); // Quando il fetch è terminato, nasconde lo spinner
     }
   };
 
@@ -40,9 +45,7 @@ const MostPopularGrid = () => {
 
       <div className="scroll-container px-1">
         <div className="scroll-content d-flex gap-4 ">
-          {eventi.map((evento) => (
-            <EventoCard key={evento.id} evento={evento} />
-          ))}
+          {loading ? <LoadingSpinner /> : eventi && eventi.map((evento) => <EventoCard key={evento.id} evento={evento} />)}
         </div>
       </div>
     </Container>

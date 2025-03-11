@@ -117,7 +117,7 @@ const EventiPage = () => {
             </Col>
           ))
         ) : (
-          <p className="mt-3">Nessun evento trovato.</p>
+          <p className="mt-3 text-uppercase">Nessun evento trovato.</p>
         )}
       </Row>
     </Container>
