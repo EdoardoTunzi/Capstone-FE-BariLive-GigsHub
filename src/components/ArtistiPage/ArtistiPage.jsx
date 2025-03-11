@@ -3,6 +3,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import BandCard from "../BandCard/BandCard";
 import LoadingSpinner from "../Spinner/LoadingSpinner";
 import { Type } from "react-bootstrap-icons";
+import { RiMusicAiFill } from "react-icons/ri";
 
 const ArtistiPage = () => {
   const [artisti, setArtisti] = useState([]);
@@ -78,6 +79,9 @@ const ArtistiPage = () => {
           </Button>
           <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("nome")}>
             <Type /> Nome
+          </Button>
+          <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("genere")}>
+            <RiMusicAiFill /> Genere
           </Button>
         </div>
 
