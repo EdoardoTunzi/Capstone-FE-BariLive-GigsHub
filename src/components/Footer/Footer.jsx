@@ -18,30 +18,30 @@ const Footer = () => {
           <Col md={4}>
             <Nav className="justify-content-center">
               <Nav.Item>
-                <Nav.Link href={"/"} className="px-2 text-white">
+                <Nav.Link as={Link} to={"/"} className="px-2 text-white">
                   Home
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="#" className="px-2 text-white">
+                <Nav.Link as={Link} to={"/eventi"} className="px-2 text-white">
                   Eventi
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                <Nav.Link href="#" className="px-2 text-white">
+                <Nav.Link as={Link} to={"/artisti"} className="px-2 text-white">
                   Artisti
                 </Nav.Link>
               </Nav.Item>
             </Nav>
 
             <div className="d-flex justify-content-center mt-2 mb-3">
-              <Nav.Link href="#" className=" mx-2">
+              <Nav.Link href="https://www.facebook.com" className=" mx-2" target="_blank">
                 <Facebook size={24} />
               </Nav.Link>
-              <Nav.Link href="#" className=" mx-2">
+              <Nav.Link href="https://www.instagram.com" className=" mx-2" target="_blank">
                 <Instagram size={24} />
               </Nav.Link>
-              <Nav.Link href="#" className=" mx-2">
+              <Nav.Link href="https://www.twitter.com" className=" mx-2" target="_blank">
                 <Twitter size={24} />
               </Nav.Link>
             </div>
