@@ -2,7 +2,8 @@ import { Button, Card, Modal } from "react-bootstrap";
 import "./EventoCard.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { MusicNote } from "react-bootstrap-icons";
+import { RiMusicAiFill } from "react-icons/ri";
+import { FaLocationDot } from "react-icons/fa6";
 
 const EventoCard = ({ evento }) => {
   const [showModal, setShowModal] = useState(false);
@@ -28,12 +29,13 @@ const EventoCard = ({ evento }) => {
         <Card.Body className="p-0 mt-2">
           <Card.Title className="text-uppercase fs-5 text-truncate">{evento.nome}</Card.Title>
           <Card.Text className="text-capitalize m-0 fw-bold">
-            <MusicNote />
-            {evento.band.nomeBand}
+            <RiMusicAiFill /> {evento.band.nomeBand}
           </Card.Text>
           <div className="d-flex">
             <div>
-              <Card.Text className="text-capitalize m-0 fw-bold">@ {evento.location}</Card.Text>
+              <Card.Text className="text-capitalize m-0 fw-bold">
+                <FaLocationDot /> {evento.location}
+              </Card.Text>
               <Card.Text className="text-capitalize">{evento.prezzoIngresso}</Card.Text>
             </div>
 

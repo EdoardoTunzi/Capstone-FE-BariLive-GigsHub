@@ -2,8 +2,11 @@ import { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import EventoCard from "../EventoCard/EventoCard";
 import "./EventiPage.css";
-import { Calendar, Calendar2, CalendarDate, GeoAlt, MusicNote, Pin, PinMap, Type } from "react-bootstrap-icons";
+import { CalendarDate } from "react-bootstrap-icons";
 import LoadingSpinner from "../Spinner/LoadingSpinner";
+import { TbMusicSearch } from "react-icons/tb";
+import { FaLocationDot } from "react-icons/fa6";
+import { PiTextAa } from "react-icons/pi";
 
 const EventiPage = () => {
   const [eventi, setEventi] = useState([]);
@@ -87,13 +90,13 @@ const EventiPage = () => {
             <CalendarDate /> Data
           </Button>
           <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("band")}>
-            <MusicNote /> Artista
+            <TbMusicSearch /> Artista
           </Button>
           <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("location")}>
-            <GeoAlt /> Location
+            <FaLocationDot /> Location
           </Button>
           <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("nome")}>
-            <Type /> Nome
+            <PiTextAa /> Nome
           </Button>
         </div>
 
