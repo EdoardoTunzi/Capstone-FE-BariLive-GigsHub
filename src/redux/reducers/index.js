@@ -18,7 +18,8 @@ const mainReducer = (state = initialState, action) => {
     case "LOGOUT":
       return {
         ...state,
-        user: null // Resetto lo stato quando l'utente esce
+        user: null, // Resetto lo stato quando l'utente esce
+        token: null
       };
 
     default:

@@ -17,7 +17,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/eventi" element={<EventiPage />} />
           <Route path="/artisti" element={<ArtistiPage />} />
-          <Route path="/bacheca" element={<ProfilePage />} />
+          <Route path="/myhub" element={<ProfilePage />} />
         </Routes>
         <Footer />
       </BrowserRouter>

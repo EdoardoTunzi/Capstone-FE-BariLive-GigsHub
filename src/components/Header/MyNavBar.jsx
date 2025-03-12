@@ -65,7 +65,7 @@ const MyNavBar = () => {
   return (
     <>
       <header>
-        <Navbar className="navbarCustom px-4 py-4 sticky-top" expand="md" bg="black" data-bs-theme="dark">
+        <Navbar className="navbarCustom" expand="md" bg="black" data-bs-theme="dark">
           <Container>
             <Navbar.Brand className="me-5">
               <Link to={"/"}>
@@ -91,11 +91,16 @@ const MyNavBar = () => {
                 )}
               </Nav>
               {user ? (
-                <div className="text-center text-md-start mt-4 mt-md-0 ms-auto">
-                  <Button className="  border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/bacheca"}>
+                <div className="text-center text-md-start mt-4 mt-md-0 ms-auto d-flex align-items-center gap-1">
+                  <Button className="  border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/myhub"}>
                     My HUB{" "}
                   </Button>
-                  <img className="rounded-circle border border-3 border-white ms-3" src={user.avatar} alt="avatar del profilo utente" style={{ width: 50 }} />
+                  <div
+                    className="rounded-circle border border-white overflow-hidden d-flex align-items-center justify-content-center"
+                    style={{ width: 50, height: 50 }}
+                  >
+                    <img className="w-100 h-100 object-fit-cover" src={user.avatar} alt="avatar del profilo utente" />
+                  </div>
                 </div>
               ) : (
                 <Button className=" mt-4 mt-md-0 ms-auto border rounded-pill fw-semi-bold fs-5 px-4" variant="light" onClick={handleShow}>
