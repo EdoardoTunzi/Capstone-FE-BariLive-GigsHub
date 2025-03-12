@@ -28,9 +28,23 @@ const ProfilePage = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const handleClosePassword = () => setShowPasswordModal(false);
-  const handleShowPassword = () => setShowPasswordModal(true);
+  const handleShowPassword = () => {
+    setError(null); //
+    setSuccess(null);
+    setShowPasswordModal(true);
+  };
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  /* modale avatar change */
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const handleShowAvatar = () => {
+    setError(null); //
+    setSuccess(null);
+    setShowAvatarModal(true);
+  };
+  const handleCloseAvatar = () => setShowAvatarModal(false);
 
   /* FetchPartecipazioni */
   const fetchPartecipazioni = async (stato, setState) => {
@@ -97,6 +111,54 @@ const ProfilePage = () => {
     }
   };
 
+  /* Fetch per modifica immagine avatar */
+  const handleAvatarChange = async (e) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    if (!selectedFile) {
+      setError("Seleziona un'immagine da caricare prima di inviare.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("avatar", selectedFile);
+
+    try {
+      const response = await fetch("http://localhost:8080/user/me/avatar", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error("Errore nel caricamento dell'immagine avatar");
+      }
+
+      const responseData = await response.json();
+      const newAvatarUrl = responseData.avatarUrl; //dal json di risposta mi prendo il valore del campo avatarUrl.
+
+      setSuccess("Immagine profilo aggiornata!");
+      //aggiorno lo stato redux
+      dispatch({
+        type: "ADD_TO_USER",
+        payload: { ...user, avatar: newAvatarUrl }
+      });
+      //chiudo il
+      /* setTimeout(() => {
+        handleClose();
+        setSuccess(null);
+        setSelectedFile(null);
+      }, 2000); */
+    } catch (error) {
+      console.log("Errore: " + error);
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     Promise.all([
@@ -117,11 +179,14 @@ const ProfilePage = () => {
             <div className="d-flex align-items-center ">
               <div className="position-relative">
                 <div
-                  className="rounded-circle border border-black overflow-hidden d-flex align-items-center justify-content-center shadow-sm"
+                  className="rounded-circle border border-black border-2 overflow-hidden d-flex align-items-center justify-content-center shadow-sm"
                   style={{ width: 150, height: 150 }}
                 >
                   <img className="w-100 h-100 object-fit-cover" src={user.avatar} alt="avatar utente" />
-                  <div className="editAvatar position-absolute bottom-0 end-0  bg-white rounded-circle shadow-sm text-black border border-black">
+                  <div
+                    onClick={handleShowAvatar}
+                    className="editAvatar position-absolute bottom-0 end-0  bg-white rounded-circle shadow-sm text-black border border-black"
+                  >
                     <MdEdit size={20} />
                   </div>
                 </div>
@@ -217,6 +282,29 @@ const ProfilePage = () => {
       </Modal>
 
       {/* modale cambio avatar */}
+      <Modal show={showAvatarModal} onHide={handleCloseAvatar}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modifica Avatar</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {error && <p className="text-danger">{error}</p>}
+          {success && <p className="text-success">{success}</p>}
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Seleziona una nuova immagine per il tuo avatar</Form.Label>
+              <Form.Control type="file" accept="image/*" onChange={(e) => setSelectedFile(e.target.files[0])} required />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseAvatar}>
+            Chiudi
+          </Button>
+          <Button variant="dark" onClick={handleAvatarChange}>
+            Carica
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
