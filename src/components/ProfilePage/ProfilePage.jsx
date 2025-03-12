@@ -63,7 +63,7 @@ const ProfilePage = () => {
     navigate("/", { replace: true });
   };
 
-  /* Gestisce la modifica password */
+  /* Fetch per modifica password */
   const handlePasswordChange = async () => {
     //setto su null error e success, per evitare messaggi vecchi
     setError(null);
@@ -203,7 +203,7 @@ const ProfilePage = () => {
             </Form.Group>
           </Form>
           <Button variant="dark" onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+            {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi passwords" : "Mostra passwords"}
           </Button>
         </Modal.Body>
         <Modal.Footer>
