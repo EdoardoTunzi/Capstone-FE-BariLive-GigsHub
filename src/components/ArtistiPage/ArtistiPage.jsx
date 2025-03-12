@@ -20,7 +20,6 @@ const ArtistiPage = () => {
 
       if (response.ok) {
         let bands = await response.json();
-        console.log(bands.content);
         setArtisti(bands.content);
       } else {
         throw new Error("Errore nel caricamento delle bands");

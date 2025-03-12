@@ -5,7 +5,7 @@ const PercheSection = () => {
   return (
     <section className="perche-usare  text-center">
       <Container className="my-5 text-center">
-        <h2 className="text-uppercase mb-4">Scopri il meglio della scena musicale locale, senza perdere tempo!</h2>
+        <h2 className="text-uppercase mb-4">Scopri il meglio della scena musicale locale, in pochi click!</h2>
         <Row className="gy-4 mt-5">
           <Col xs={12} md={6} lg={4}>
             <Calendar2Check size={50} className="mb-3 " />

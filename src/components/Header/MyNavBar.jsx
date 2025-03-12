@@ -32,7 +32,6 @@ const MyNavBar = () => {
       }
 
       const data = await response.json();
-      console.log(data);
       dispatch(addToToken(data.token));
       fetchUserDetails(data.token); // Salva nel Redux Store
       handleClose(); //chiude modale
@@ -65,7 +64,7 @@ const MyNavBar = () => {
   return (
     <>
       <header>
-        <Navbar className="navbarCustom" expand="md" bg="black" data-bs-theme="dark">
+        <Navbar className="navbarCustom" expand="md" bg="black" data-bs-theme="dark" fixed="top">
           <Container>
             <Navbar.Brand className="me-5">
               <Link to={"/"}>
@@ -91,7 +90,7 @@ const MyNavBar = () => {
                 )}
               </Nav>
               {user ? (
-                <div className="text-center text-md-start mt-4 mt-md-0 ms-auto d-flex align-items-center gap-1">
+                <div className="my-4 my-md-0 ms-auto d-flex align-items-center justify-content-center gap-1 ">
                   <Button className="  border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/myhub"}>
                     My HUB{" "}
                   </Button>
@@ -103,9 +102,11 @@ const MyNavBar = () => {
                   </div>
                 </div>
               ) : (
-                <Button className=" mt-4 mt-md-0 ms-auto border rounded-pill fw-semi-bold fs-5 px-4" variant="light" onClick={handleShow}>
-                  LOGIN
-                </Button>
+                <div className="text-center">
+                  <Button className="my-4 my-md-0 ms-auto border rounded-pill fw-semi-bold fs-5 px-4" variant="light" onClick={handleShow}>
+                    LOGIN
+                  </Button>
+                </div>
               )}
             </Navbar.Collapse>
           </Container>
@@ -114,7 +115,7 @@ const MyNavBar = () => {
 
       {/* MODALE LOGIN */}
 
-      <Modal show={show} onHide={handleClose}>
+      <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton>
           <img src="/src/assets/mascotteGifWhite.gif" alt="" style={{ width: 60 }} />
           <Modal.Title>LOGIN</Modal.Title>

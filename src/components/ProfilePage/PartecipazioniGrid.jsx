@@ -4,7 +4,9 @@ import EventoCard from "../EventoCard/EventoCard";
 const PartecipazioniGrid = ({ titolo, eventi }) => {
   return (
     <div className="mb-4">
-      <h2 className="fs-4 border-bottom border-dark border-3 pb-2">{titolo}</h2>
+      <h2 className="fs-4 border-bottom border-dark border-3 pb-2">
+        {titolo} - {eventi.length}
+      </h2>
       <Row className="gy-4 mt-3">
         {eventi.length > 0 ? (
           eventi.map((evento) => (

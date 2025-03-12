@@ -238,7 +238,7 @@ const ProfilePage = () => {
       {/* MODALI */}
 
       {/* modale cambio password */}
-      <Modal show={showPasswordModal} onHide={handleClosePassword}>
+      <Modal show={showPasswordModal} onHide={handleClosePassword} centered>
         <Modal.Header closeButton>
           <Modal.Title>Cambia Password</Modal.Title>
         </Modal.Header>
@@ -282,7 +282,7 @@ const ProfilePage = () => {
       </Modal>
 
       {/* modale cambio avatar */}
-      <Modal show={showAvatarModal} onHide={handleCloseAvatar}>
+      <Modal show={showAvatarModal} onHide={handleCloseAvatar} centered>
         <Modal.Header closeButton>
           <Modal.Title>Modifica Avatar</Modal.Title>
         </Modal.Header>
