@@ -107,7 +107,7 @@ const ArtistiPage = () => {
           <Row className="gy-4 mt-3 border-top border-black border-4">
             {artisti.length > 0 ? (
               artisti.map((band) => (
-                <Col key={band.id} lg={2} md={3} sm={6}>
+                <Col key={band.id} lg={3} md={3} sm={6}>
                   <BandCard band={band} />
                 </Col>
               ))
