@@ -18,6 +18,11 @@ const ProfilePage = () => {
   const [success, setSuccess] = useState(null);
   const [error, setError] = useState(null);
 
+  const [reload, setReload] = useState(false);
+  const handleReload = () => {
+    setReload((prev) => !prev);
+  };
+
   /* fetch eventi da partecipazioni */
   const [partecipero, setPartecipero] = useState([]);
   const [miInteressa, setMiInteressa] = useState([]);
@@ -167,7 +172,7 @@ const ProfilePage = () => {
       fetchPartecipazioni("PARTECIPATO", setPartecipato)
     ]).finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [reload]);
 
   return (
     <>
@@ -228,9 +233,9 @@ const ProfilePage = () => {
           <LoadingSpinner />
         ) : (
           <>
-            <PartecipazioniGrid titolo="Eventi a cui parteciperai" eventi={partecipero} />
-            <PartecipazioniGrid titolo="Eventi che ti interessano" eventi={miInteressa} />
-            <PartecipazioniGrid titolo="Eventi a cui hai partecipato" eventi={partecipato} />
+            <PartecipazioniGrid titolo="Eventi a cui parteciperai" eventi={partecipero} handleReload={handleReload} />
+            <PartecipazioniGrid titolo="Eventi che ti interessano" eventi={miInteressa} handleReload={handleReload} />
+            <PartecipazioniGrid titolo="Eventi a cui hai partecipato" eventi={partecipato} handleReload={handleReload} />
           </>
         )}
       </Container>

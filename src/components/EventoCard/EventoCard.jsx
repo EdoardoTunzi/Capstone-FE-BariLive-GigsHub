@@ -4,10 +4,13 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RiMusicAiFill } from "react-icons/ri";
 import { FaLocationDot } from "react-icons/fa6";
+import { ImLink } from "react-icons/im";
 
-const EventoCard = ({ evento }) => {
+const EventoCard = ({ titolo, evento, handleReload }) => {
   const [showModal, setShowModal] = useState(false);
   const user = useSelector((state) => state.user);
+  const token = useSelector((state) => state.token);
+  const [message, setMessage] = useState(""); // Per mostrare il messaggio di conferma o errore
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -21,7 +24,68 @@ const EventoCard = ({ evento }) => {
     return formattedDate.replace(/^\w/, (c) => c.toUpperCase());
   };
 
-  //IMPLEMENTA MODALE DETTAGLI EVENTO ! TANTO LO UTLIZZERAI ANCHE NELLA PAGINA EVENTI
+  //fetch per creare partecipazione
+  const handlePartecipazione = async (eventoId, statoPartecipazione) => {
+    try {
+      const response = await fetch("http://localhost:8080/user/partecipazione", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          eventoId: eventoId,
+          statoPartecipazione: statoPartecipazione
+        })
+      });
+
+      const dataText = await response.text();
+
+      if (response.ok) {
+        //creo la partecipazione
+        setMessage("Preferenza salvata e visibile nel tuo Hub");
+        setStatoPartecipazione(statoPartecipazione);
+      } else {
+        if (dataText.includes("Hai già una partecipazione")) {
+          //se la partecipazione è gia stata creata per questo evento
+          //modifico lo stato della partecipazione esistente
+          handleCambiaStato(eventoId, statoPartecipazione);
+        } else {
+          setMessage("Errore: " + dataText);
+        }
+      }
+    } catch (error) {
+      console.log("Errore nella creazione o modifica partecipazione. " + error);
+      setMessage("Errore di rete, riprova più tardi");
+    }
+  };
+
+  // Funzione per cambiare stato partecipazione
+  const handleCambiaStato = async (eventoId, nuovoStato) => {
+    try {
+      const response = await fetch(`http://localhost:8080/user/partecipazione/${eventoId}?stato=${nuovoStato}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await response.text();
+      if (response.ok) {
+        setMessage(`Preferenza aggiornata in MyHub`);
+
+        setTimeout(() => {
+          handleReload();
+        }, 1500);
+      } else {
+        setMessage(`Errore: ${data}`);
+      }
+    } catch (error) {
+      console.error("Errore: ", error);
+      setMessage("Errore di rete, riprova.");
+    }
+  };
+
   return (
     <>
       <Card className="border-0 eventCard" onClick={user ? handleShow : null} style={{ cursor: user ? "pointer" : "default" }}>
@@ -49,31 +113,62 @@ const EventoCard = ({ evento }) => {
           <Modal.Title>{evento.nome}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4 border-top  border-black border-3">
-          <img src={evento.locandina} alt={evento.nome} className="img-fluid p-2 mb-3 rounded-5 border-black border-3" />
+          <div className="text-center">
+            <img src={evento.locandina} alt={evento.nome} className="img-fluid mb-4 rounded-5 border-black border-3" style={{ maxWidth: 360 }} />
+          </div>
           <div className="border-top border-black border-3">
-            <p className="mt-4">
+            <p className="mt-4 mb-1">
               <strong>Location:</strong> {evento.location}
             </p>
           </div>
-          <p className="text-capitalize">
+          <p className="text-capitalize mb-1">
             <strong>Data:</strong> {formatDate(evento.data)}
           </p>
-          <p>
+          <p className="mb-1">
             <strong>Prezzo:</strong> {evento.prezzoIngresso}
           </p>
-          <p>
+          <p className="mb-1">
             <strong>Band:</strong> {evento.band.nomeBand} ({evento.band.genereMusicale})
           </p>
-          <p>
+          <p className="mb-1">
             <strong>Info: </strong>
             {evento.descrizione}
           </p>
+          {!titolo && (
+            <div className="d-flex gap-3 align-items-center justify-content-center mt-4">
+              {/* se non sono nella sezione profilo e non ho passato un titolo nelle props, i bottoni sono entrambi dark*/}
+              <Button variant="dark" onClick={() => handlePartecipazione(evento.id, "PARTECIPERO")}>
+                Parteciperò
+              </Button>
+              <Button variant="dark" onClick={() => handlePartecipazione(evento.id, "MI_INTERESSA")}>
+                Mi Interessa
+              </Button>
+            </div>
+          )}
+
+          {titolo && titolo !== "Eventi a cui hai partecipato" && (
+            <div className="d-flex gap-3 align-items-center justify-content-center mt-4">
+              {/* in base al titolo che prendo da PartecipazioneGrid evidenzio o meno il tasto che mostra lo stato attuale della partecipazione */}
+              <Button variant={titolo == "Eventi a cui parteciperai" ? "dark" : "secondary"} onClick={() => handlePartecipazione(evento.id, "PARTECIPERO")}>
+                Parteciperò
+              </Button>
+              <Button variant={titolo !== "Eventi a cui parteciperai" ? "dark" : "secondary"} onClick={() => handlePartecipazione(evento.id, "MI_INTERESSA")}>
+                Mi Interessa
+              </Button>
+            </div>
+          )}
+          {message && <p className="mt-2 text-center mb-0">{message}</p>}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-dark">Link Evento</Button>
-          <Button variant="outline-dark">Dice</Button>
-          <Button variant="outline-dark" className="me-auto">
-            TicketOne
+          {/* INSERISCI LINK E RENDERIZZA SE PRESENTI */}
+          <Button variant="outline-dark px-2 py-1">
+            <ImLink size={20} /> Sito evento
+          </Button>
+          <Button variant="outline-dark py-0">
+            <img src="/src/assets/dice.svg" alt="" style={{ width: 34 }} />
+          </Button>
+          <Button variant="outline-dark" className="me-auto pt-0 pb-1 ps-3">
+            <img src="/src/assets/ticketone.svg" alt="" style={{ width: 75, height: 30 }} />
           </Button>
           <Button variant="dark" onClick={handleClose}>
             Chiudi
