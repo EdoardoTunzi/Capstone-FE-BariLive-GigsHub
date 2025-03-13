@@ -9,6 +9,7 @@ import { addToUser, logout } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import { PiWarningFill } from "react-icons/pi";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.user);
@@ -23,7 +24,7 @@ const ProfilePage = () => {
     setReload((prev) => !prev);
   };
 
-  /* fetch eventi da partecipazioni */
+  /* variabili per fetch eventi da partecipazioni */
   const [partecipero, setPartecipero] = useState([]);
   const [miInteressa, setMiInteressa] = useState([]);
   const [partecipato, setPartecipato] = useState([]);
@@ -60,6 +61,17 @@ const ProfilePage = () => {
   const handleCloseEdit = () => setShowEditModal(false);
   const handleShowEdit = () => {
     setShowEditModal(true);
+    setError(null);
+    setSuccess(null);
+  };
+
+  /* modale elimina account */
+  const [confirmText, setConfirmText] = useState("");
+  const requiredText = "ELIMINA";
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const handleCloseDelete = () => setShowDeleteModal(false);
+  const handleShowDelete = () => {
+    setShowDeleteModal(true);
     setError(null);
     setSuccess(null);
   };
@@ -220,6 +232,38 @@ const ProfilePage = () => {
     }
   };
 
+  /* Fetch cancella account */
+  const handleDeleteAccount = async () => {
+    setError(null);
+    setSuccess(null);
+    //controllo che l'utente abbia scritto ELIMINA prima di procedere
+    if (confirmText !== requiredText) {
+      setError("Devi digitare 'ELIMINA' per confermare.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8080/user/me`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Errore nella cancellazione dell'account");
+      }
+      setSuccess("Profilo eliminato con successo");
+      // Se la cancellazione è andata a buon fine, effettuo il logout
+      setTimeout(() => {
+        handleLogout();
+      }, 3500);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     Promise.all([
@@ -234,7 +278,7 @@ const ProfilePage = () => {
     <>
       <Container className="container-vh">
         {/* Sezione info account */}
-        <div className="profile-info my-5">
+        <div className="profile-info mb-5 shadow py-4 px-5 rounded-3">
           <div className="d-flex flex-wrap align-items-center justify-content-between">
             {/* Sezione Avatar + Info */}
             <div className="d-flex align-items-center ">
@@ -277,7 +321,7 @@ const ProfilePage = () => {
               <Button variant="link" className="text-black p-0" onClick={handleShowEdit}>
                 Modifica i tuoi dettagli
               </Button>
-              <Button variant="link" className="text-danger p-0">
+              <Button variant="link" className="text-danger p-0" onClick={handleShowDelete}>
                 Cancella account
               </Button>
             </div>
@@ -418,6 +462,39 @@ const ProfilePage = () => {
           </Button>
           <Button variant="dark" onClick={handleEditUserDetails}>
             Salva modifiche
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modale delete account */}
+      <Modal show={showDeleteModal} onHide={handleCloseDelete} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {" "}
+            <PiWarningFill />
+            Elimina Account
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>
+            Questa azione è <strong>irreversibile</strong>. Eliminando il tuo account, perderai tutti i dati associati.
+          </p>
+          <p>Sei sicuro di voler procedere?</p>
+          <Form.Group className="mb-3">
+            <Form.Label>
+              Digita <strong>"{requiredText}"</strong> per confermare:
+            </Form.Label>
+            <Form.Control type="text" placeholder={requiredText} value={confirmText} onChange={(e) => setConfirmText(e.target.value)} />
+          </Form.Group>
+          {error && <p className="text-danger">{error}</p>}
+          {success && <p className="text-success">{success}</p>}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDelete}>
+            Annulla
+          </Button>
+          <Button variant="danger" onClick={handleDeleteAccount} disabled={confirmText !== requiredText}>
+            Elimina Account
           </Button>
         </Modal.Footer>
       </Modal>

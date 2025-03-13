@@ -95,7 +95,7 @@ const MyNavBar = () => {
                     My HUB{" "}
                   </Button>
                   <div
-                    className="rounded-circle border border-white overflow-hidden d-flex align-items-center justify-content-center"
+                    className="rounded-circle border border-white border-2 overflow-hidden d-flex align-items-center justify-content-center"
                     style={{ width: 50, height: 50 }}
                   >
                     <img className="w-100 h-100 object-fit-cover" src={user.avatar} alt="avatar del profilo utente" />
