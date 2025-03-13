@@ -17,3 +17,7 @@ body {
   margin-top: 120px;
   min-height: 100vh;
 }
+
+.btn-pointer {
+  cursor: pointer;
+}

@@ -4,17 +4,24 @@ import { Alert, Button, Container, Form, Modal, Nav, Navbar, NavDropdown } from 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToToken, addToUser } from "../../redux/actions/actions";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const MyNavBar = () => {
   const [show, setShow] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setUsername("");
+    setPassword("");
+    setError(null);
+    setShow(true);
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -132,9 +139,12 @@ const MyNavBar = () => {
                 className="shadow-black bs-dark-border-subtle"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 required
               />
+              <span className="outline-secondary d-inline-block btn-pointer" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi password" : "Mostra password"}
+              </span>
             </Form.Group>
           </Form>
         </Modal.Body>

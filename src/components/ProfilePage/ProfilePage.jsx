@@ -35,7 +35,9 @@ const ProfilePage = () => {
   const [newPassword, setNewPassword] = useState("");
   const handleClosePassword = () => setShowPasswordModal(false);
   const handleShowPassword = () => {
-    setError(null); //
+    setOldPassword("");
+    setNewPassword("");
+    setError(null);
     setSuccess(null);
     setShowPasswordModal(true);
   };
@@ -46,7 +48,7 @@ const ProfilePage = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const handleShowAvatar = () => {
-    setError(null); //
+    setError(null);
     setSuccess(null);
     setShowAvatarModal(true);
   };
@@ -133,8 +135,11 @@ const ProfilePage = () => {
 
       //scegli se lanciare anceh un toast success a fondo pagina
       setSuccess(textData);
-      setOldPassword("");
-      setNewPassword("");
+
+      setTimeout(() => {
+        handleClosePassword();
+        setSuccess(null);
+      }, 2000);
     } catch (error) {
       console.log("Errore: ", error);
       setError(error.message);
@@ -360,6 +365,9 @@ const ProfilePage = () => {
                 type={showPassword ? "text" : "password"}
                 required
               />
+              <span className="outline-secondary d-inline-block btn-pointer" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi passwords" : "Mostra passwords"}
+              </span>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Nuova password</Form.Label>
@@ -370,11 +378,11 @@ const ProfilePage = () => {
                 type={showPassword ? "text" : "password"}
                 required
               />
+              <span className="outline-secondary d-inline-block btn-pointer" onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi passwords" : "Mostra passwords"}
+              </span>
             </Form.Group>
           </Form>
-          <Button variant="dark" onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi passwords" : "Mostra passwords"}
-          </Button>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClosePassword}>

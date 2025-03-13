@@ -128,7 +128,7 @@ const Hero = () => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-                <span className="outline-secondary d-inline-block" onClick={() => setShowPassword(!showPassword)}>
+                <span className="outline-secondary d-inline-block btn-pointer" onClick={() => setShowPassword(!showPassword)}>
                   {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi password" : "Mostra password"}
                 </span>
               </Form.Group>
