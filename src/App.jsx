@@ -7,6 +7,7 @@ import HomePage from "./components/HomePage/HomePage";
 import ArtistiPage from "./components/ArtistiPage/ArtistiPage";
 import EventiPage from "./components/EventiPage/EventiPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
+import BackOffice from "./components/AdminBackoffice/Backoffice";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/eventi" element={<EventiPage />} />
           <Route path="/artisti" element={<ArtistiPage />} />
           <Route path="/myhub" element={<ProfilePage />} />
+          <Route path="/backoffice" element={<BackOffice />} />
         </Routes>
         <Footer />
       </BrowserRouter>

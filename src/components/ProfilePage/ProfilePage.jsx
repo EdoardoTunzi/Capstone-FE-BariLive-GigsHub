@@ -4,12 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingSpinner from "../Spinner/LoadingSpinner";
 import PartecipazioniGrid from "./PartecipazioniGrid";
 import { MdEdit, MdEmail } from "react-icons/md";
-import { IoPersonSharp } from "react-icons/io5";
+import { IoPersonSharp, IoWarningOutline } from "react-icons/io5";
 import { addToUser, logout } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { PiWarningFill } from "react-icons/pi";
 
 const ProfilePage = () => {
   const user = useSelector((state) => state.user);
@@ -283,10 +282,10 @@ const ProfilePage = () => {
     <>
       <Container className="container-vh">
         {/* Sezione info account */}
-        <div className="profile-info mb-5 shadow py-4 px-5 rounded-3">
-          <div className="d-flex flex-wrap align-items-center justify-content-between">
+        <div className="profile-info mb-5 shadow py-4 px-5 rounded-3 ">
+          <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
             {/* Sezione Avatar + Info */}
-            <div className="d-flex align-items-center ">
+            <div className="d-flex align-items-center justify-content-center flex-wrap ">
               <div className="position-relative">
                 <div
                   className="rounded-circle border border-black border-2 overflow-hidden d-flex align-items-center justify-content-center shadow-sm"
@@ -302,7 +301,7 @@ const ProfilePage = () => {
                 </div>
               </div>
 
-              <div className="ms-4">
+              <div className="ms-2 ms-sm-4 mt-3 mt-sm-0">
                 <p className="fs-1 fw-bold m-0">
                   {user.nome} {user.cognome}
                 </p>
@@ -316,7 +315,7 @@ const ProfilePage = () => {
             </div>
 
             {/* Sezione Pulsanti azioni profilo, sulla destra*/}
-            <div className="d-flex flex-column align-items-end">
+            <div className="d-flex flex-column align-items-md-end mt-5 mt-md-0">
               <Button variant="dark" className="mb-2" onClick={handleLogout}>
                 Log out
               </Button>
@@ -479,11 +478,10 @@ const ProfilePage = () => {
         <Modal.Header closeButton>
           <Modal.Title>
             {" "}
-            <PiWarningFill />
-            Elimina Account
+            <IoWarningOutline /> Elimina Account
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="p-5">
           <p>
             Questa azione è <strong>irreversibile</strong>. Eliminando il tuo account, perderai tutti i dati associati.
           </p>

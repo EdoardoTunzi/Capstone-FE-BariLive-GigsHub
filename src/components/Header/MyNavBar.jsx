@@ -15,6 +15,8 @@ const MyNavBar = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  const [expanded, setExpanded] = useState(false);
+
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setUsername("");
@@ -71,34 +73,34 @@ const MyNavBar = () => {
   return (
     <>
       <header>
-        <Navbar className="navbarCustom" expand="md" bg="black" data-bs-theme="dark" fixed="top">
+        <Navbar expanded={expanded} className="navbarCustom" expand="md" bg="black" data-bs-theme="dark" fixed="top">
           <Container>
             <Navbar.Brand className="me-5">
               <Link to={"/"}>
                 <img src="/src/assets/logoBianco.png" alt="BariLive logo" style={{ width: 180 }} />
               </Link>
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
             <Navbar.Collapse id="basic-navbar-nav" className="me-0">
               <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }}>
-                <Nav.Link as={Link} to={"/"} className="text-white me-2">
+                <Nav.Link as={Link} to={"/"} className="text-white me-2" onClick={() => setExpanded(false)}>
                   HOME
                 </Nav.Link>
-                <Nav.Link as={Link} to={"/eventi"} className="text-white me-2">
+                <Nav.Link as={Link} to={"/eventi"} className="text-white me-2" onClick={() => setExpanded(false)}>
                   EVENTI
                 </Nav.Link>
-                <Nav.Link as={Link} to={"/artisti"} className="text-white ">
+                <Nav.Link as={Link} to={"/artisti"} className="text-white" onClick={() => setExpanded(false)}>
                   ARTISTI
                 </Nav.Link>
                 {user && user.ruolo == "ADMIN" && (
-                  <Nav.Link as={Link} to={"/backoffice"} className="text-white ">
+                  <Nav.Link as={Link} to={"/backoffice"} className="text-white" onClick={() => setExpanded(false)}>
                     BACKOFFICE
                   </Nav.Link>
                 )}
               </Nav>
               {user ? (
                 <div className="my-4 my-md-0 ms-auto d-flex align-items-center justify-content-center gap-1 ">
-                  <Button className="  border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/myhub"}>
+                  <Button className="border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/myhub"} onClick={() => setExpanded(false)}>
                     My HUB{" "}
                   </Button>
                   <div
@@ -110,7 +112,14 @@ const MyNavBar = () => {
                 </div>
               ) : (
                 <div className="text-center">
-                  <Button className="my-4 my-md-0 ms-auto border rounded-pill fw-semi-bold fs-5 px-4" variant="light" onClick={handleShow}>
+                  <Button
+                    className="my-4 my-md-0 ms-auto border rounded-pill fw-semi-bold fs-5 px-4"
+                    variant="light"
+                    onClick={() => {
+                      setExpanded(false);
+                      handleShow();
+                    }}
+                  >
                     LOGIN
                   </Button>
                 </div>

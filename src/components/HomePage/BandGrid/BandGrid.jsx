@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import BandCard from "../../BandCard/BandCard";
 import { Button, Container } from "react-bootstrap";
 import LoadingSpinner from "../../Spinner/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const BandGrid = () => {
   const [bands, setBands] = useState([]);
@@ -37,7 +38,7 @@ const BandGrid = () => {
     <Container className="p-0 ">
       <div className="d-flex align-items-start mb-4 border-bottom border-black border-5 pb-3">
         <h2 className="fs-2">Artisti del momento</h2>
-        <Button variant="dark" href={"/artisti"} className="ms-auto fs-5 bg-black">
+        <Button variant="dark" as={Link} to={"/artisti"} className="ms-auto fs-5 bg-black">
           Vedi tutti
         </Button>
       </div>
