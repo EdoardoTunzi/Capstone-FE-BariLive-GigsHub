@@ -5,7 +5,7 @@ import LoadingSpinner from "../Spinner/LoadingSpinner";
 import PartecipazioniGrid from "./PartecipazioniGrid";
 import { MdEdit, MdEmail } from "react-icons/md";
 import { IoPersonSharp } from "react-icons/io5";
-import { logout } from "../../redux/actions/actions";
+import { addToUser, logout } from "../../redux/actions/actions";
 import { useNavigate } from "react-router-dom";
 import "./ProfilePage.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
@@ -50,6 +50,19 @@ const ProfilePage = () => {
     setShowAvatarModal(true);
   };
   const handleCloseAvatar = () => setShowAvatarModal(false);
+
+  /* modale modifica dettagli utente */
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [newNome, setNewNome] = useState(user.nome);
+  const [newCognome, setNewCognome] = useState(user.cognome);
+  const [newUsername, setNewUsername] = useState(user.username);
+  const [newEmail, setNewEmail] = useState(user.email);
+  const handleCloseEdit = () => setShowEditModal(false);
+  const handleShowEdit = () => {
+    setShowEditModal(true);
+    setError(null);
+    setSuccess(null);
+  };
 
   /* FetchPartecipazioni */
   const fetchPartecipazioni = async (stato, setState) => {
@@ -164,6 +177,49 @@ const ProfilePage = () => {
     }
   };
 
+  /* Fetch modifica dettagli utente */
+  const handleEditUserDetails = async () => {
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const response = await fetch("http://localhost:8080/user/me", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          nome: newNome,
+          cognome: newCognome,
+          username: newUsername,
+          email: newEmail
+        })
+      });
+
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw new Error(responseData.message || "Errore nell'aggiornamento del profilo");
+      }
+
+      setSuccess("Dettagli profilo aggiornati con successo!");
+      //aggiorno lo stato redux
+      dispatch(
+        addToUser({
+          ...user, // Mantiene i vecchi dati
+          ...responseData // Sovrascrive solo i campi aggiornati
+        })
+      );
+
+      setTimeout(() => {
+        handleCloseEdit();
+      }, 2000);
+    } catch (error) {
+      console.log("Errore: ", error);
+      setError(error.message);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     Promise.all([
@@ -218,7 +274,7 @@ const ProfilePage = () => {
               <Button variant="link" className="text-black p-0" onClick={handleShowPassword}>
                 Cambia Password
               </Button>
-              <Button variant="link" className="text-black p-0">
+              <Button variant="link" className="text-black p-0" onClick={handleShowEdit}>
                 Modifica i tuoi dettagli
               </Button>
               <Button variant="link" className="text-danger p-0">
@@ -307,6 +363,61 @@ const ProfilePage = () => {
           </Button>
           <Button variant="dark" onClick={handleAvatarChange}>
             Carica
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modale modifica dettagli utente */}
+      <Modal show={showEditModal} onHide={handleCloseEdit} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Modifica i tuoi dettagli</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {error && <p className="text-danger">{error}</p>}
+          {success && <p className="text-success">{success}</p>}
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Nome</Form.Label>
+              <Form.Control className="shadow-black bs-dark-border-subtle" value={newNome} onChange={(e) => setNewNome(e.target.value)} type="text" required />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Cognome</Form.Label>
+              <Form.Control
+                className="shadow-black bs-dark-border-subtle"
+                value={newCognome}
+                onChange={(e) => setNewCognome(e.target.value)}
+                type="text"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                className="shadow-black bs-dark-border-subtle"
+                value={newUsername}
+                onChange={(e) => setNewUsername(e.target.value)}
+                type="text"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                className="shadow-black bs-dark-border-subtle"
+                value={newEmail}
+                onChange={(e) => setNewEmail(e.target.value)}
+                type="email"
+                required
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseEdit}>
+            Chiudi
+          </Button>
+          <Button variant="dark" onClick={handleEditUserDetails}>
+            Salva modifiche
           </Button>
         </Modal.Footer>
       </Modal>

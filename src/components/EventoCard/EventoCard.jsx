@@ -44,7 +44,6 @@ const EventoCard = ({ titolo, evento, handleReload }) => {
       if (response.ok) {
         //creo la partecipazione
         setMessage("Preferenza salvata e visibile nel tuo Hub");
-        setStatoPartecipazione(statoPartecipazione);
       } else {
         if (dataText.includes("Hai già una partecipazione")) {
           //se la partecipazione è gia stata creata per questo evento
