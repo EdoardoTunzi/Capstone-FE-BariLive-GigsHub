@@ -15,7 +15,6 @@ const BandGrid = () => {
       if (response.ok) {
         let bands = await response.json();
         if (bands) {
-          console.log(bands);
           setBands(bands.content);
         } else {
           console.log("Error: data not found");

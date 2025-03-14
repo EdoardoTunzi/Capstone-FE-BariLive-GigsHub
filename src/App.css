@@ -29,3 +29,9 @@ body {
   color: black;
   border-color: inherit !important;
 }
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px; /* Imposta una larghezza massima */
+}

@@ -240,17 +240,17 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
             <Table striped bordered hover responsive size="sm">
               <thead>
                 <tr>
+                  <th>Azioni</th>
                   <th>ID</th>
                   <th>Nome</th>
                   <th>Data</th>
                   <th>Ora</th>
                   <th>Location</th>
                   <th>Band - ID</th>
-                  {/* <th>Descrizione</th> */}
+                  <th>Descrizione</th>
                   <th>Locandina</th>
                   <th>Prezzo</th>
                   <th>Url</th>
-                  <th>Azioni</th>
                 </tr>
               </thead>
               <tbody>
@@ -259,6 +259,14 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
                     .sort((a, b) => b.id - a.id)
                     .map((event) => (
                       <tr key={event.id}>
+                        <td>
+                          <Button className="me-2" variant="warning" size="sm" onClick={() => handleEditClick(event)}>
+                            <FaRegEdit />
+                          </Button>{" "}
+                          <Button className="" variant="danger" size="sm" onClick={() => handleDelete(event.id)}>
+                            <RiDeleteBin6Line />
+                          </Button>
+                        </td>
                         <td>{event.id}</td>
                         <td>{event.nome}</td>
                         <td>{event.data}</td>
@@ -267,18 +275,10 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
                         <td>
                           {event.band.nomeBand} - {event.band.id}
                         </td>
-                        {/* <td>{event.descrizione}</td> */}
+                        <td>{event.descrizione}</td>
                         <td>{event.locandina}</td>
                         <td>{event.prezzoIngresso}</td>
                         <td>{event.urlEvento}</td>
-                        <td>
-                          <Button className="" variant="warning" size="sm" onClick={() => handleEditClick(event)}>
-                            <FaRegEdit />
-                          </Button>{" "}
-                          <Button variant="danger" size="sm" onClick={() => handleDelete(event.id)}>
-                            <RiDeleteBin6Line />
-                          </Button>
-                        </td>
                       </tr>
                     ))
                 ) : (

@@ -21,8 +21,9 @@ const BackOffice = () => {
     try {
       const response = await fetch("http://localhost:8080/admin/utenti", { headers: { Authorization: `Bearer ${token}` } });
       if (response.ok) {
-        const utenti = await response.json();
-        setUtenti(utenti.content);
+        const listaUtenti = await response.json();
+        console.log(listaUtenti.content);
+        setUtenti(listaUtenti.content);
       }
     } catch (error) {
       console.error("Errore nel recupero utenti", error);
@@ -34,8 +35,9 @@ const BackOffice = () => {
       const response = await fetch("http://localhost:8080/eventi");
 
       if (response.ok) {
-        let eventi = await response.json();
-        setEventi(eventi.content);
+        let listaEventi = await response.json();
+        console.log(listaEventi.content);
+        setEventi(listaEventi.content);
       } else {
         throw new Error("Errore nel caricamento degli eventi");
       }
@@ -48,8 +50,9 @@ const BackOffice = () => {
     try {
       const response = await fetch("http://localhost:8080/bands", { headers: { Authorization: `Bearer ${token}` } });
       if (response.ok) {
-        const bands = await response.json();
-        setBands(bands.content);
+        const listaBands = await response.json();
+        console.log(listaBands.content);
+        setBands(listaBands.content);
       }
     } catch (error) {
       console.error("Errore nel recupero band", error);
@@ -57,9 +60,8 @@ const BackOffice = () => {
   };
 
   useEffect(() => {
-    getAllUtenti();
-    getAllEventi();
-    getAllBands();
+    Promise.all([getAllUtenti(), getAllEventi(), getAllBands()]);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

@@ -16,7 +16,6 @@ const MostPopularGrid = () => {
       if (response.ok) {
         let eventi = await response.json();
         if (eventi) {
-          console.log(eventi);
           setEventi(eventi.content);
         } else {
           console.log("Errore: eventi non trovati");
