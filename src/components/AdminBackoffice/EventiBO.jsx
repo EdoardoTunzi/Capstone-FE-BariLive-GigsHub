@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Accordion, Button, Form, Modal, Table } from "react-bootstrap";
 import { BsCalendarEvent } from "react-icons/bs";
+import { LiaClipboardListSolid } from "react-icons/lia";
 import { useSelector } from "react-redux";
-const EventiBO = ({ eventi, getAllEventi }) => {
+const EventiBO = ({ eventi, bands, getAllEventi }) => {
   const token = useSelector((state) => state.token);
+
+  const [newEvent, setNewEvent] = useState(null);
+
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [editedEvent, setEditedEvent] = useState({});
@@ -53,7 +57,51 @@ const EventiBO = ({ eventi, getAllEventi }) => {
     }
   };
 
-  // Funzione per eliminare un evento
+  //Funzione per creare nuovo evento
+  const handleCreateNewEvent = async () => {
+    //controllo che tutti i campi obbligatori siano presenti
+    if (
+      !newEvent.nome ||
+      !newEvent.data ||
+      !newEvent.ora ||
+      !newEvent.location ||
+      !newEvent.descrizione ||
+      !newEvent.locandina ||
+      !newEvent.prezzoIngresso ||
+      !newEvent.bandId
+    ) {
+      setMessage("Compila tutti i campi obbligatori!");
+      return;
+    }
+
+    setMessage("");
+
+    try {
+      const response = await fetch(`http://localhost:8080/admin/evento`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify(newEvent)
+      });
+
+      const responseText = await response.text();
+
+      if (response.ok) {
+        setMessage(responseText || "Evento creato con successo");
+        getAllEventi(); //faccio un refresh della lista eventi nel componente padre
+        setTimeout(() => {
+          setMessage("");
+          setNewEvent(null);
+        }, 6000);
+      } else {
+        throw new Error(responseText || "Errore sconosciuto");
+      }
+    } catch (error) {
+      console.error("Errore nella creazione:", error);
+      setMessage(`Errore nella creazione: ${error.message}`);
+    }
+  };
+
+  // Funzione per eliminare un evento - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DA IMPLEMENTARE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   const handleDelete = async (id) => {
     if (window.confirm("Sei sicuro di voler eliminare questo evento?")) {
       try {
@@ -71,28 +119,96 @@ const EventiBO = ({ eventi, getAllEventi }) => {
         {/* Sezione Creazione Evento */}
         <Accordion.Item eventKey="0">
           <Accordion.Header>
-            <BsCalendarEvent /> Aggiungi Evento
+            <BsCalendarEvent /> <p className="m-0 ms-2 fw-bold">Aggiungi Evento</p>
           </Accordion.Header>
           <Accordion.Body>
             <Form>
               <Form.Group>
                 <Form.Label>Nome Evento</Form.Label>
-                <Form.Control type="text" placeholder="Inserisci nome evento" />
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci nome evento"
+                  value={newEvent?.nome || ""}
+                  onChange={(e) => setNewEvent({ ...newEvent, nome: e.target.value })}
+                />
               </Form.Group>
               <Form.Group>
                 <Form.Label>Data</Form.Label>
-                <Form.Control type="date" />
+                <Form.Control type="date" value={newEvent?.data || ""} onChange={(e) => setNewEvent({ ...newEvent, data: e.target.value })} />
               </Form.Group>
-              <Button variant="success" className="mt-3">
-                Crea Nuovo Evento
-              </Button>
+              <Form.Group>
+                <Form.Label>Ora</Form.Label>
+                <Form.Control type="time" value={newEvent?.ora || ""} onChange={(e) => setNewEvent({ ...newEvent, ora: e.target.value })} />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Location</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci nome location"
+                  value={newEvent?.location || ""}
+                  onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Descrizione</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  placeholder="Inserisci descrizione(max 255 caratteri)"
+                  value={newEvent?.descrizione || ""}
+                  onChange={(e) => setNewEvent({ ...newEvent, descrizione: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Locandina</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci url locandina"
+                  value={newEvent?.locandina || ""}
+                  onChange={(e) => setNewEvent({ ...newEvent, locandina: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Prezzo</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci prezzo, es. 12€ / Gratuito "
+                  value={newEvent?.prezzoIngresso || ""}
+                  onChange={(e) => setNewEvent({ ...newEvent, prezzoIngresso: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Sito delle evento</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Inserisci URL evento (opzionale)"
+                  value={newEvent?.urlEvento || ""}
+                  onChange={(e) => setNewEvent({ ...newEvent, urlEvento: e.target.value })}
+                />
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Band</Form.Label>
+                <Form.Select value={newEvent?.bandId || ""} onChange={(e) => setNewEvent({ ...newEvent, bandId: e.target.value })}>
+                  <option value="">Seleziona una band...</option>
+                  {bands.map((band) => (
+                    <option key={band.id} value={band.id}>
+                      (Id: {band.id}) {band.nomeBand}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
             </Form>
+            <Button variant="dark" className="mt-3" onClick={handleCreateNewEvent}>
+              Crea Nuovo Evento
+            </Button>
+            {message && <div className="mt-3 fs-5 fw-semi-bold text-center">{message} !</div>}
           </Accordion.Body>
         </Accordion.Item>
 
         {/* Tabella con tutti gli eventi */}
         <Accordion.Item eventKey="1">
-          <Accordion.Header>📋 Lista Eventi</Accordion.Header>
+          <Accordion.Header>
+            <LiaClipboardListSolid size={20} /> <p className="m-0 ms-1 fw-bold">Lista eventi</p>
+          </Accordion.Header>
           <Accordion.Body>
             <Table striped bordered hover responsive size="sm">
               <thead>
@@ -102,7 +218,7 @@ const EventiBO = ({ eventi, getAllEventi }) => {
                   <th>Data</th>
                   <th>Ora</th>
                   <th>Location</th>
-                  <th>Band/Artista</th>
+                  <th>Band - ID</th>
                   <th>Descrizione</th>
                   <th>Locandina</th>
                   <th>Prezzo</th>
@@ -174,11 +290,17 @@ const EventiBO = ({ eventi, getAllEventi }) => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Band</Form.Label>
-              <Form.Control
-                type="text"
+              <Form.Select
                 value={editedEvent.band?.id || ""}
                 onChange={(e) => setEditedEvent({ ...editedEvent, band: { ...editedEvent.band, id: e.target.value } })}
-              />
+              >
+                <option value="">Seleziona una band...</option>
+                {bands.map((band) => (
+                  <option key={band.id} value={band.id}>
+                    (Id: {band.id}) {band.nomeBand}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
             <Form.Group>
               <Form.Label>Descrizione (max 255)</Form.Label>

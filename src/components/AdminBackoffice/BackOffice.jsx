@@ -100,7 +100,7 @@ const BackOffice = () => {
             {/* SEZIONE EVENTI */}
             <Tab.Pane eventKey="eventi">
               <h4>Gestione Eventi</h4>
-              <EventiBO eventi={eventi} getAllEventi={getAllEventi} />
+              <EventiBO eventi={eventi} bands={bands} getAllEventi={getAllEventi} />
             </Tab.Pane>
 
             {/* SEZIONE BAND */}
