@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Accordion, Button, Form, Modal, Table, Toast, ToastContainer } from "react-bootstrap";
+import { Accordion, Button, Form, Modal, Table, Toast } from "react-bootstrap";
 import { BsCalendarEvent } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
 import { LiaClipboardListSolid } from "react-icons/lia";
@@ -93,7 +93,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
         setTimeout(() => {
           setMessage("");
           setNewEvent(null);
-        }, 6000);
+        }, 20000);
       } else {
         throw new Error(responseText || "Errore sconosciuto");
       }
@@ -103,7 +103,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
     }
   };
 
-  // Funzione per eliminare un evento - !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! DA IMPLEMENTARE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Funzione per eliminare un evento
   const handleDelete = async (id) => {
     if (window.confirm("Sei sicuro di voler eliminare questo evento?")) {
       try {
