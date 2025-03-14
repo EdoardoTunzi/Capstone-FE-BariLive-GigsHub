@@ -66,6 +66,7 @@ const BackOffice = () => {
     <>
       <Container className="container-vh">
         <h1 className="border-bottom border-black border-4 mb-4 pb-3">Admin Backoffice</h1>
+
         <Tab.Container defaultActiveKey="stats">
           {/* Tab per navigare tra le sezioni */}
           <Nav variant="tabs">
@@ -106,13 +107,13 @@ const BackOffice = () => {
             {/* SEZIONE BAND */}
             <Tab.Pane eventKey="band">
               <h4>Gestione Band</h4>
-              <BandBO bands={bands} refreshBands={getAllBands} />
+              <BandBO bands={bands} getAllBands={getAllBands} />
             </Tab.Pane>
 
             {/* SEZIONE UTENTI */}
             <Tab.Pane eventKey="utenti">
               <h4>Gestione Utenti</h4>
-              <UtentiBO utenti={utenti} refreshUtenti={getAllUtenti} />
+              <UtentiBO utenti={utenti} getAllUtenti={getAllUtenti} />
             </Tab.Pane>
           </Tab.Content>
         </Tab.Container>

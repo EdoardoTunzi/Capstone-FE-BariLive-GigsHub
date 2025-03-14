@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Accordion, Button, Form, Modal, Table } from "react-bootstrap";
+import { Accordion, Button, Form, Modal, Table, Toast, ToastContainer } from "react-bootstrap";
 import { BsCalendarEvent } from "react-icons/bs";
+import { FaRegEdit } from "react-icons/fa";
 import { LiaClipboardListSolid } from "react-icons/lia";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 const EventiBO = ({ eventi, bands, getAllEventi }) => {
   const token = useSelector((state) => state.token);
@@ -21,7 +23,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
     setMessage("");
   };
 
-  // Funzione per salvare le modifiche all'evento con PUT
+  // Fetch per modifica evento
   const handleSaveChanges = async () => {
     try {
       const response = await fetch(`http://localhost:8080/admin/evento/${selectedEvent.id}`, {
@@ -57,7 +59,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
     }
   };
 
-  //Funzione per creare nuovo evento
+  //Fetch per creare nuovo evento
   const handleCreateNewEvent = async () => {
     //controllo che tutti i campi obbligatori siano presenti
     if (
@@ -70,7 +72,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
       !newEvent.prezzoIngresso ||
       !newEvent.bandId
     ) {
-      setMessage("Compila tutti i campi obbligatori!");
+      setMessage("Compila tutti i campi obbligatori");
       return;
     }
 
@@ -105,8 +107,24 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
   const handleDelete = async (id) => {
     if (window.confirm("Sei sicuro di voler eliminare questo evento?")) {
       try {
-        await fetch(`URL_DELETE_EVENT/${id}`, { method: "DELETE" });
-        getAllEventi(); //faccio un refresh degli eventi nel componente padre
+        const response = await fetch(`http://localhost:8080/admin/evento/${id}`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        const responseText = await response.text();
+
+        if (response.ok) {
+          setMessage(responseText || "Evento eliminato con successo");
+          getAllEventi(); //faccio un refresh degli eventi nel componente padre
+          setTimeout(() => {
+            setMessage("");
+          }, 20000);
+        } else {
+          throw new Error(responseText || "Errore sconosciuto");
+        }
       } catch (error) {
         console.error("Errore nell'eliminazione:", error);
       }
@@ -115,7 +133,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
 
   return (
     <>
-      <Accordion>
+      <Accordion flush>
         {/* Sezione Creazione Evento */}
         <Accordion.Item eventKey="0">
           <Accordion.Header>
@@ -134,11 +152,21 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
               </Form.Group>
               <Form.Group>
                 <Form.Label>Data</Form.Label>
-                <Form.Control type="date" value={newEvent?.data || ""} onChange={(e) => setNewEvent({ ...newEvent, data: e.target.value })} />
+                <Form.Control
+                  type="date"
+                  value={newEvent?.data || ""}
+                  onChange={(e) => setNewEvent({ ...newEvent, data: e.target.value })}
+                  style={{ maxWidth: 130 }}
+                />
               </Form.Group>
               <Form.Group>
                 <Form.Label>Ora</Form.Label>
-                <Form.Control type="time" value={newEvent?.ora || ""} onChange={(e) => setNewEvent({ ...newEvent, ora: e.target.value })} />
+                <Form.Control
+                  type="time"
+                  value={newEvent?.ora || ""}
+                  onChange={(e) => setNewEvent({ ...newEvent, ora: e.target.value })}
+                  style={{ maxWidth: 130 }}
+                />
               </Form.Group>
               <Form.Group>
                 <Form.Label>Location</Form.Label>
@@ -200,7 +228,6 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
             <Button variant="dark" className="mt-3" onClick={handleCreateNewEvent}>
               Crea Nuovo Evento
             </Button>
-            {message && <div className="mt-3 fs-5 fw-semi-bold text-center">{message} !</div>}
           </Accordion.Body>
         </Accordion.Item>
 
@@ -219,7 +246,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
                   <th>Ora</th>
                   <th>Location</th>
                   <th>Band - ID</th>
-                  <th>Descrizione</th>
+                  {/* <th>Descrizione</th> */}
                   <th>Locandina</th>
                   <th>Prezzo</th>
                   <th>Url</th>
@@ -240,16 +267,16 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
                         <td>
                           {event.band.nomeBand} - {event.band.id}
                         </td>
-                        <td>{event.descrizione}</td>
+                        {/* <td>{event.descrizione}</td> */}
                         <td>{event.locandina}</td>
                         <td>{event.prezzoIngresso}</td>
                         <td>{event.urlEvento}</td>
                         <td>
-                          <Button variant="warning" size="sm" onClick={() => handleEditClick(event)}>
-                            ✏ Modifica
+                          <Button className="" variant="warning" size="sm" onClick={() => handleEditClick(event)}>
+                            <FaRegEdit />
                           </Button>{" "}
                           <Button variant="danger" size="sm" onClick={() => handleDelete(event.id)}>
-                            ❌ Elimina
+                            <RiDeleteBin6Line />
                           </Button>
                         </td>
                       </tr>
@@ -338,6 +365,21 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Toast per notifiche */}
+      <Toast
+        show={!!message}
+        onClose={() => setMessage("")}
+        delay={20000}
+        autohide
+        bg={message.includes("Errore") ? "danger" : "light"}
+        className="position-fixed bottom-0 end-0 m-3"
+      >
+        <Toast.Header>
+          <strong className="me-auto">{message.includes("Errore") ? "Errore" : "Notifica:"}</strong>
+        </Toast.Header>
+        <Toast.Body className={message.includes("Errore") ? "text-white" : ""}>{message}</Toast.Body>
+      </Toast>
     </>
   );
 };
