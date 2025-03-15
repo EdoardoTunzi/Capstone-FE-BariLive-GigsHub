@@ -24,7 +24,7 @@ const BandBO = ({ bands, getAllBands }) => {
   };
 
   // Fetch per modifica band -- IMPLEMENTAAAAAAAAAAAAAAAAA
-  const handleSaveChanges = async () => {
+  const handleUpdateBandDetails = async () => {
     try {
       const response = await fetch(`http://localhost:8080/admin/band/${selectedBand.id}`, {
         method: "PUT",
@@ -282,49 +282,53 @@ const BandBO = ({ bands, getAllBands }) => {
       {/* Modale di modifica evento---------------------------- MODIFICA MODALE FORM--------------*/}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Modifica Evento ID: {editedBand.id}</Modal.Title>
+          <Modal.Title>Modifica Band: ID {editedBand.id}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
             <Form.Group>
-              <Form.Label>Nome Evento</Form.Label>
-              <Form.Control type="text" value={editedBand.nome || ""} onChange={(e) => setEditedBand({ ...editedBand, nome: e.target.value })} />
+              <Form.Label>Nome</Form.Label>
+              <Form.Control type="text" value={editedBand.nomeBand || ""} onChange={(e) => setEditedBand({ ...editedBand, nomeBand: e.target.value })} />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Data</Form.Label>
-              <Form.Control type="date" value={editedBand.data || ""} onChange={(e) => setEditedBand({ ...editedBand, data: e.target.value })} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Ora</Form.Label>
-              <Form.Control type="text" value={editedBand.ora || ""} onChange={(e) => setEditedBand({ ...editedBand, ora: e.target.value })} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Luogo</Form.Label>
-              <Form.Control type="text" value={editedBand.location || ""} onChange={(e) => setEditedBand({ ...editedBand, location: e.target.value })} />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Descrizione (max 255)</Form.Label>
-              <Form.Control
-                as="textarea"
-                value={editedBand.descrizione || ""}
-                onChange={(e) => setEditedBand({ ...editedBand, descrizione: e.target.value })}
-              />
-            </Form.Group>
-            <Form.Group>
-              <Form.Label>Prezzo Ingresso</Form.Label>
+              <Form.Label>Genere</Form.Label>
               <Form.Control
                 type="text"
-                value={editedBand.prezzoIngresso || ""}
-                onChange={(e) => setEditedBand({ ...editedBand, prezzoIngresso: e.target.value })}
+                value={editedBand.genereMusicale || ""}
+                onChange={(e) => setEditedBand({ ...editedBand, genereMusicale: e.target.value })}
               />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Url evento(opzionale)</Form.Label>
-              <Form.Control type="text" value={editedBand.urlEvento || ""} onChange={(e) => setEditedBand({ ...editedBand, urlEvento: e.target.value })} />
+              <Form.Label>Bio (max 255)</Form.Label>
+              <Form.Control as="textarea" value={editedBand.bio || ""} onChange={(e) => setEditedBand({ ...editedBand, bio: e.target.value })} />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Locandina</Form.Label>
-              <Form.Control type="text" value={editedBand.locandina || ""} onChange={(e) => setEditedBand({ ...editedBand, locandina: e.target.value })} />
+              <Form.Label>Foto</Form.Label>
+              <Form.Control type="text" value={editedBand.fotoBand || ""} onChange={(e) => setEditedBand({ ...editedBand, fotoBand: e.target.value })} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Sito ufficiale (opzionale)</Form.Label>
+              <Form.Control type="text" value={editedBand.sitoWeb || ""} onChange={(e) => setEditedBand({ ...editedBand, sitoWeb: e.target.value })} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Instagram (opzionale)</Form.Label>
+              <Form.Control type="text" value={editedBand.instagram || ""} onChange={(e) => setEditedBand({ ...editedBand, instagram: e.target.value })} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Facebook (opzionale)</Form.Label>
+              <Form.Control type="text" value={editedBand.facebook || ""} onChange={(e) => setEditedBand({ ...editedBand, facebook: e.target.value })} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Spotify (opzionale)</Form.Label>
+              <Form.Control type="text" value={editedBand.spotify || ""} onChange={(e) => setEditedBand({ ...editedBand, spotify: e.target.value })} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Soundcloud (opzionale)</Form.Label>
+              <Form.Control type="text" value={editedBand.soundcloud || ""} onChange={(e) => setEditedBand({ ...editedBand, soundcloud: e.target.value })} />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Youtube(opzionale)</Form.Label>
+              <Form.Control type="text" value={editedBand.youtube || ""} onChange={(e) => setEditedBand({ ...editedBand, youtube: e.target.value })} />
             </Form.Group>
           </Form>
           {message && <div className="mt-3 fs-5 fw-semi-bold text-center">{message} !</div>}
@@ -333,7 +337,7 @@ const BandBO = ({ bands, getAllBands }) => {
           <Button variant="secondary" onClick={() => setShowEditModal(false)}>
             Chiudi
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
+          <Button variant="dark" onClick={handleUpdateBandDetails}>
             Salva Modifiche
           </Button>
         </Modal.Footer>

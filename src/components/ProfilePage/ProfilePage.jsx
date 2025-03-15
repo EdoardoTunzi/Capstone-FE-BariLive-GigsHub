@@ -126,14 +126,14 @@ const ProfilePage = () => {
           newPassword
         })
       });
-      const textData = await response.text();
 
       if (!response.ok) {
-        throw new Error(textData || "Errore nel cambio password");
+        const responseData = await response.json();
+        throw new Error(responseData.message || "Errore nel cambio password");
       }
 
       //scegli se lanciare anceh un toast success a fondo pagina
-      setSuccess(textData);
+      setSuccess("Password modificata con successo");
 
       setTimeout(() => {
         handleClosePassword();
@@ -218,7 +218,7 @@ const ProfilePage = () => {
         throw new Error(responseData.message || "Errore nell'aggiornamento del profilo");
       }
 
-      setSuccess("Dettagli profilo aggiornati con successo!");
+      setSuccess("Dettagli profilo aggiornati con successo");
       //aggiorno lo stato redux
       dispatch(
         addToUser({

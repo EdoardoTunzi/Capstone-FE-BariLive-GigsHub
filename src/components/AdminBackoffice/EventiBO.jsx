@@ -24,7 +24,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
   };
 
   // Fetch per modifica evento
-  const handleSaveChanges = async () => {
+  const handleUpdateEventDetails = async () => {
     try {
       const response = await fetch(`http://localhost:8080/admin/evento/${selectedEvent.id}`, {
         method: "PUT",
@@ -360,7 +360,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
           <Button variant="secondary" onClick={() => setShowEditModal(false)}>
             Chiudi
           </Button>
-          <Button variant="primary" onClick={handleSaveChanges}>
+          <Button variant="dark" onClick={handleUpdateEventDetails}>
             Salva Modifiche
           </Button>
         </Modal.Footer>
