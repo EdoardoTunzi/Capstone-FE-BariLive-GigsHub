@@ -282,7 +282,7 @@ const ProfilePage = () => {
     <>
       <Container className="container-vh">
         {/* Sezione info account */}
-        <div className="profile-info mb-5 shadow py-4 px-5 rounded-3 ">
+        <div className="profile-info mb-5 shadow py-4 px-5 rounded-4 ">
           <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
             {/* Sezione Avatar + Info */}
             <div className="d-flex align-items-center justify-content-center flex-wrap ">

@@ -89,7 +89,7 @@ const MyNavBar = () => {
                 <Nav.Link as={Link} to={"/eventi"} className="text-white me-2" onClick={() => setExpanded(false)}>
                   EVENTI
                 </Nav.Link>
-                <Nav.Link as={Link} to={"/artisti"} className="text-white" onClick={() => setExpanded(false)}>
+                <Nav.Link as={Link} to={"/artisti"} className="text-white me-2" onClick={() => setExpanded(false)}>
                   ARTISTI
                 </Nav.Link>
                 {user && user.ruolo == "ADMIN" && (

@@ -90,7 +90,7 @@ const EventiPage = () => {
             <CalendarDate /> Data
           </Button>
           <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("band")}>
-            <TbMusicSearch /> Artista
+            <TbMusicSearch /> Band
           </Button>
           <Button className="p-2 px-3" variant="dark" onClick={() => setFiltro("location")}>
             <FaLocationDot /> Location

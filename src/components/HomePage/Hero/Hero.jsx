@@ -72,15 +72,14 @@ const Hero = () => {
 
   return (
     <>
-      <Container fluid className="hero1 ">
+      <Container fluid className=" p-0 m-0 ">
         <div className="d-flex justify-content-center align-items-center hero1">
-          <div className="text-center p-5">
-            <h1 className="display-3 fw-semi-bold text-white">
-              <span className="fw-bold text-black">Scopri la scena live di Bari.</span> Tutti i concerti, in un solo posto!
-            </h1>
+          <div className="text-center text-white p-5">
+            <h1 className="display-3 fw-bold ">Scopri la scena live di Bari.</h1>
+            <h2 className="display-5 ">Tutti i concerti, in un solo posto!</h2>
             {!user && (
               <div className="p-5">
-                <Button variant="dark" className="rounded-3 fs-3 px-4 bg-black" onClick={handleShow}>
+                <Button variant="light" className="rounded-3 fs-3 px-4 rounded-pill " onClick={handleShow}>
                   Registrati ora
                 </Button>
               </div>
