@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./MyNavBar.css";
 import { Alert, Button, Container, Form, Modal, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToToken, addToUser } from "../../redux/actions/actions";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
@@ -13,7 +13,6 @@ const MyNavBar = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
 
   const [expanded, setExpanded] = useState(false);
@@ -47,9 +46,6 @@ const MyNavBar = () => {
       handleClose(); //chiude modale
       setUsername("");
       setPassword("");
-      setTimeout(() => {
-        navigate("/myhub");
-      }, 500);
     } catch (error) {
       setError(error.message); // Mostra il messaggio di errore nel form
     }
