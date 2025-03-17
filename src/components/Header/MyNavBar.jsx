@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./MyNavBar.css";
 import { Alert, Button, Container, Form, Modal, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToToken, addToUser } from "../../redux/actions/actions";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
@@ -14,7 +14,9 @@ const MyNavBar = () => {
   const [error, setError] = useState(null);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
+  const navigate = useNavigate();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -27,6 +29,7 @@ const MyNavBar = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetch("http://localhost:8080/auth/login", {
         method: "POST",
@@ -46,8 +49,11 @@ const MyNavBar = () => {
       handleClose(); //chiude modale
       setUsername("");
       setPassword("");
+      setLoggedIn(true); // Attiva il redirect nel useEffect
     } catch (error) {
       setError(error.message); // Mostra il messaggio di errore nel form
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -70,11 +76,20 @@ const MyNavBar = () => {
     }
   };
 
+  useEffect(() => {
+    if (loggedIn && user) {
+      setTimeout(() => {
+        navigate("/myhub"); // reindirizzo alla pagina myhub dopo mezzo secondo dal login e aspetto che user sia disponibile in redux
+        setLoggedIn(false); // Reset dello stato login per evitare loop nel reindirizzamento e permettere accesso a home
+      }, 500);
+    }
+  }, [loggedIn, user, navigate]);
+
   return (
     <>
       <header>
         <Navbar expanded={expanded} className="navbarCustom" expand="md" bg="black" data-bs-theme="dark" fixed="top">
-          <Container>
+          <Container className="py-2 px-md-0">
             <Navbar.Brand className="me-5">
               <Link to={"/"}>
                 <img src="/src/assets/logoBianco.png" alt="BariLive logo" style={{ width: 180 }} />
@@ -99,8 +114,8 @@ const MyNavBar = () => {
                 )}
               </Nav>
               {user ? (
-                <div className="my-4 my-md-0 ms-auto d-flex align-items-center justify-content-center gap-1 ">
-                  <Button className="border rounded-pill fw-semi-bold fs-5 px-4" variant="light" as={Link} to={"/myhub"} onClick={() => setExpanded(false)}>
+                <div className="my-4 my-md-0 ms-auto d-flex align-items-center justify-content-center gap-2 ">
+                  <Button className="border rounded-pill fw-semi-bold px-4" variant="light" as={Link} to={"/myhub"} onClick={() => setExpanded(false)}>
                     My HUB{" "}
                   </Button>
                   <div
@@ -166,8 +181,8 @@ const MyNavBar = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="dark" type="submit" onClick={handleLogin}>
-            LOGIN
+          <Button variant="dark" type="submit" onClick={handleLogin} disabled={isLoading}>
+            {isLoading ? "Caricamento..." : "LOGIN"}
           </Button>
         </Modal.Footer>
       </Modal>
