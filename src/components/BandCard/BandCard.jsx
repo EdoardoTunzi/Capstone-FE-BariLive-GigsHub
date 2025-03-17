@@ -27,10 +27,13 @@ const BandCard = ({ band }) => {
           <Modal.Title>{band.nomeBand}</Modal.Title>
         </Modal.Header>
         <Modal.Body className="p-4 border-top  border-black border-3">
-          <img src={band.fotoBand} alt={band.nome} className="img-fluid p-2 mb-3 rounded-5 border-black border-3" />
+          <div className="text-center">
+            <img src={band.fotoBand} alt={band.nome} className="img-fluid p-2 mb-3 rounded-5 border-black border-3" style={{ maxWidth: 360 }} />
+          </div>
+
           <div className="border-top border-black border-3">
             <p className="mt-4 text-uppercase">
-              <strong>Genere:</strong> {band.genereMusicale}
+              <strong className="text-capitalize">Genere:</strong> {band.genereMusicale}
             </p>
           </div>
           <p>

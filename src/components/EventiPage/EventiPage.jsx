@@ -128,7 +128,7 @@ const EventiPage = () => {
           <Row className="gy-4 mt-3 border-top border-black border-4">
             {eventi.length > 0 ? (
               eventi.map((evento) => (
-                <Col key={evento.id} lg={3} md={3} sm={6}>
+                <Col key={evento.id} lg={3} md={4} sm={6}>
                   <EventoCard evento={evento} />
                 </Col>
               ))

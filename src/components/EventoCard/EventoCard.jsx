@@ -1,4 +1,4 @@
-import { Button, Card, Modal } from "react-bootstrap";
+import { Badge, Button, Card, Modal } from "react-bootstrap";
 import "./EventoCard.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -88,21 +88,22 @@ const EventoCard = ({ titolo, evento, handleReload }) => {
   return (
     <>
       <Card className="border-0 eventCard" onClick={user ? handleShow : null} style={{ cursor: user ? "pointer" : "default" }}>
-        <Card.Img variant="top" src={evento.locandina} className="rounded-0" />
+        <div className="position-relative">
+          <Card.Img variant="top" src={evento.locandina} className="rounded-0" />
+          <div className="position-absolute bottom-0 start-0 bg-dark text-light fw-bold px-3 py-1 rounded-top">{formatDate(evento.data)}</div>
+        </div>
         <Card.Body className="p-0 mt-2">
-          <Card.Title className="text-uppercase fs-5 text-truncate">{evento.nome}</Card.Title>
+          <Card.Title className="text-uppercase fs-5 text-truncate mb-0">{evento.nome}</Card.Title>
           <Card.Text className="text-capitalize m-0 fw-bold">
             <RiMusicAiFill /> {evento.band.nomeBand}
           </Card.Text>
-          <div className="d-flex">
+          <div className="d-flex justify-content-between">
             <div>
               <Card.Text className="text-capitalize m-0 fw-bold">
                 <FaLocationDot /> {evento.location}
               </Card.Text>
               <Card.Text className="text-capitalize">{evento.prezzoIngresso}</Card.Text>
             </div>
-
-            <Card.Text className="text-capitalize ms-auto fs-4 fw-bold">{formatDate(evento.data)}</Card.Text>
           </div>
         </Card.Body>
       </Card>
@@ -135,7 +136,7 @@ const EventoCard = ({ titolo, evento, handleReload }) => {
           </p>
           {!titolo && (
             <div className="d-flex gap-3 align-items-center justify-content-center mt-4">
-              {/* se non sono nella sezione profilo e non ho passato un titolo nelle props, i bottoni sono entrambi dark*/}
+              {/* se non sono nella sezione my hub e non ho passato un titolo nelle props, i bottoni sono entrambi dark*/}
               <Button variant="dark" onClick={() => handlePartecipazione(evento.id, "PARTECIPERO")}>
                 Parteciperò
               </Button>
@@ -160,15 +161,18 @@ const EventoCard = ({ titolo, evento, handleReload }) => {
         </Modal.Body>
         <Modal.Footer>
           {/* INSERISCI LINK E RENDERIZZA SE PRESENTI */}
-          <Button variant="outline-dark px-2 py-1">
-            <ImLink size={20} /> Sito evento
-          </Button>
-          <Button variant="outline-dark py-0">
+          {evento.urlEvento && (
+            <Button variant="outline-dark px-2 py-1 me-auto" href={evento.urlEvento} target="_blank">
+              <ImLink size={20} /> Sito evento
+            </Button>
+          )}
+
+          {/* <Button variant="outline-dark py-0">
             <img src="/src/assets/dice.svg" alt="" style={{ width: 34 }} />
           </Button>
           <Button variant="outline-dark" className="me-auto pt-0 pb-1 ps-3">
             <img src="/src/assets/ticketone.svg" alt="" style={{ width: 75, height: 30 }} />
-          </Button>
+          </Button> */}
           <Button variant="dark" onClick={handleClose}>
             Chiudi
           </Button>
