@@ -93,7 +93,7 @@ const ProfilePage = () => {
         const eventiEstratti = data.content.map((partecipazione) => partecipazione.evento);
         console.log(eventiEstratti);
 
-        setState(eventiEstratti);
+        setState(data.content);
       } else {
         throw new Error("Errore nel caricamento degli eventi dalle partecipazioni");
       }
@@ -337,9 +337,9 @@ const ProfilePage = () => {
           <LoadingSpinner />
         ) : (
           <>
-            <PartecipazioniGrid titolo="Eventi a cui parteciperai" eventi={partecipero} handleReload={handleReload} />
-            <PartecipazioniGrid titolo="Eventi che ti interessano" eventi={miInteressa} handleReload={handleReload} />
-            <PartecipazioniGrid titolo="Eventi a cui hai partecipato" eventi={partecipato} handleReload={handleReload} />
+            <PartecipazioniGrid titolo="Eventi a cui parteciperai" partecipazioni={partecipero} handleReload={handleReload} />
+            <PartecipazioniGrid titolo="Eventi che ti interessano" partecipazioni={miInteressa} handleReload={handleReload} />
+            <PartecipazioniGrid titolo="Eventi a cui hai partecipato" partecipazioni={partecipato} handleReload={handleReload} />
           </>
         )}
       </Container>
