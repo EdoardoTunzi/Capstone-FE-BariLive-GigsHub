@@ -15,15 +15,24 @@ const EventiPage = () => {
   const [isFiltered, setIsFiltered] = useState(false); // Stato per sapere se è applicato un filtro
   const [loading, setLoading] = useState(true);
 
+  const [currentPage, setCurrentPage] = useState(0); // Inizia da pagina 0
+  const [totalPages, setTotalPages] = useState(1); // Numero totale di pagine
+  const perPage = 12; // Eventi per pagina
+
   // Fetch base per ottenere tutti gli eventi
-  const getAllEventi = async () => {
+  const getAllEventi = async (page = 0) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8080/eventi");
+      const response = await fetch(`http://localhost:8080/eventi?page=${page}&size=${perPage}`);
 
       if (response.ok) {
         let eventi = await response.json();
-        setEventi(eventi.content);
+        // Essendoci il tasto Mostra di più(pageable), al click aggiungo nuovi eventi alla lista eventi esistente,ma devo evitare duplicati
+        // Qui con il filter controllo che ogni nuovo evento da aggiungere, non sia già presente in lista(confrontando l'ID) prima di aggiungerlo
+        setEventi((prevEventi) => [...prevEventi, ...eventi.content.filter((nuovoEvento) => !prevEventi.some((evento) => evento.id === nuovoEvento.id))]);
+
+        setTotalPages(eventi.totalPages); // Aggiorna il numero totale di pagine
+        setCurrentPage(eventi.number); // Aggiorna la pagina attuale
       } else {
         throw new Error("Errore nel caricamento degli eventi");
       }
@@ -71,9 +80,15 @@ const EventiPage = () => {
     setIsFiltered(false);
     getAllEventi();
   };
+  //gestione tasto mostra di più
+  const handleShowMore = () => {
+    if (currentPage + 1 < totalPages) {
+      getAllEventi(currentPage + 1);
+    }
+  };
 
   useEffect(() => {
-    getAllEventi();
+    getAllEventi(0);
   }, []);
 
   return (
@@ -125,17 +140,29 @@ const EventiPage = () => {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <Row className="gy-4 mt-3 border-top border-black border-4">
-            {eventi.length > 0 ? (
-              eventi.map((evento) => (
-                <Col key={evento.id} lg={3} md={4} sm={6}>
-                  <EventoCard evento={evento} />
-                </Col>
-              ))
-            ) : (
-              <p className="mt-3 text-uppercase">Nessun evento trovato.</p>
+          <>
+            <Row className="gy-4 mt-3 border-top border-black border-4">
+              {eventi.length > 0 ? (
+                eventi
+                  .sort((a, b) => new Date(a.data) - new Date(b.data))
+                  .map((evento) => (
+                    <Col key={evento.id} lg={3} md={4} sm={6}>
+                      <EventoCard evento={evento} />
+                    </Col>
+                  ))
+              ) : (
+                <p className="mt-3 text-uppercase">Nessun evento trovato.</p>
+              )}
+            </Row>
+            {/* Bottone "Mostra di più" */}
+            {totalPages > 1 && currentPage + 1 < totalPages && (
+              <div className="d-flex justify-content-center my-5">
+                <Button variant="link" className="text-black fs-5" onClick={handleShowMore} disabled={loading}>
+                  {loading ? "Caricamento..." : "Mostra di più"}
+                </Button>
+              </div>
             )}
-          </Row>
+          </>
         )}
       </Container>
     </div>

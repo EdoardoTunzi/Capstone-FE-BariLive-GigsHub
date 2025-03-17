@@ -13,14 +13,20 @@ const ArtistiPage = () => {
   const [query, setQuery] = useState(""); // Testo inserito dall'utente
   const [isFiltered, setIsFiltered] = useState(false);
 
-  const getAllBands = async () => {
+  const [currentPage, setCurrentPage] = useState(0); // Inizia da pagina 0
+  const [totalPages, setTotalPages] = useState(1); // Numero totale di pagine
+  const perPage = 12; // Eventi per pagina
+
+  const getAllBands = async (page = 0) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:8080/bands");
+      const response = await fetch(`http://localhost:8080/bands?page=${page}&size=${perPage}`);
 
       if (response.ok) {
         let bands = await response.json();
-        setArtisti(bands.content);
+        setArtisti((prevBands) => [...prevBands, ...bands.content.filter((nuovaBand) => !prevBands.some((band) => band.id === nuovaBand.id))]);
+        setTotalPages(bands.totalPages); // Aggiorna il numero totale di pagine
+        setCurrentPage(bands.number);
       } else {
         throw new Error("Errore nel caricamento delle bands");
       }
@@ -61,9 +67,15 @@ const ArtistiPage = () => {
     setIsFiltered(false);
     getAllBands();
   };
+  //gestione tasto mostra di più
+  const handleShowMore = () => {
+    if (currentPage + 1 < totalPages) {
+      getAllBands(currentPage + 1);
+    }
+  };
 
   useEffect(() => {
-    getAllBands();
+    getAllBands(0);
   }, []);
 
   return (
@@ -103,17 +115,27 @@ const ArtistiPage = () => {
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <Row className="gy-4 mt-3 border-top border-black border-4">
-            {artisti.length > 0 ? (
-              artisti.map((band) => (
-                <Col key={band.id} lg={3} md={4} sm={6}>
-                  <BandCard band={band} />
-                </Col>
-              ))
-            ) : (
-              <p className="mt-3 text-uppercase">Nessun evento trovato.</p>
+          <>
+            <Row className="gy-4 mt-3 border-top border-black border-4">
+              {artisti.length > 0 ? (
+                artisti.map((band) => (
+                  <Col key={band.id} lg={3} md={4} sm={6}>
+                    <BandCard band={band} />
+                  </Col>
+                ))
+              ) : (
+                <p className="mt-3 text-uppercase">Nessun evento trovato.</p>
+              )}
+            </Row>
+            {/* Bottone "Mostra di più" */}
+            {totalPages > 1 && currentPage + 1 < totalPages && (
+              <div className="d-flex justify-content-center my-5">
+                <Button variant="link" className="text-black fs-5" onClick={handleShowMore} disabled={loading}>
+                  {loading ? "Caricamento..." : "Mostra di più"}
+                </Button>
+              </div>
             )}
-          </Row>
+          </>
         )}
       </Container>
     </div>
