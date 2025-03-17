@@ -39,25 +39,38 @@ const BandCard = ({ band }) => {
           <p>
             <strong>Bio:</strong> {band.bio}
           </p>
-          <a href={band.sitoWeb} target="_blank">
-            Sito ufficiale
-          </a>
+          {band.sitoWeb && (
+            <a href={band.sitoWeb} target="_blank">
+              Sito ufficiale
+            </a>
+          )}
+
           <div className="d-flex fs-2 gap-4 justify-content-center">
-            <a className="text-black" href={band.instagram} target="_blank">
-              <Instagram />
-            </a>
-            <a className="text-black" href={band.facebook} target="_blank">
-              <Facebook />
-            </a>
-            <a className="text-black" href={band.spotify} target="_blank">
-              <Spotify />
-            </a>
-            <a className="text-black" href={band.soundcloud} target="_blank">
-              <PiSoundcloudLogoFill />
-            </a>
-            <a className="text-black" href={band.youtube} target="_blank">
-              <Youtube />
-            </a>
+            {band.instagram && (
+              <a className="text-black" href={band.instagram} target="_blank">
+                <Instagram />
+              </a>
+            )}
+            {band.facebook && (
+              <a className="text-black" href={band.facebook} target="_blank">
+                <Facebook />
+              </a>
+            )}
+            {band.spotify && (
+              <a className="text-black" href={band.spotify} target="_blank">
+                <Spotify />
+              </a>
+            )}
+            {band.soundcloud && (
+              <a className="text-black" href={band.soundcloud} target="_blank">
+                <PiSoundcloudLogoFill />
+              </a>
+            )}
+            {band.youtube && (
+              <a className="text-black" href={band.youtube} target="_blank">
+                <Youtube />
+              </a>
+            )}
           </div>
         </Modal.Body>
         <Modal.Footer className="border-0">
