@@ -128,7 +128,7 @@ const MyNavBar = () => {
               ) : (
                 <div className="text-center">
                   <Button
-                    className="my-4 my-md-0 ms-auto border rounded-pill fw-semi-bold fs-5 px-4"
+                    className="my-4 my-md-0 ms-auto border rounded-pill fw-semi-bold px-4"
                     variant="light"
                     onClick={() => {
                       setExpanded(false);

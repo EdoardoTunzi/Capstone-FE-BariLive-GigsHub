@@ -63,6 +63,8 @@ const EventiPage = () => {
         let eventiFiltrati = await response.json();
         setEventi(eventiFiltrati.content);
         setIsFiltered(true);
+        setCurrentPage(0); // Resetta la paginazione
+        setTotalPages(1);
       } else {
         throw new Error("Errore nel filtrare gli eventi");
       }
@@ -78,7 +80,8 @@ const EventiPage = () => {
     setFiltro("");
     setQuery("");
     setIsFiltered(false);
-    getAllEventi();
+    setEventi([]); //svuoto la lista per evitare duplicati
+    getAllEventi(0);
   };
   //gestione tasto mostra di più
   const handleShowMore = () => {
@@ -155,7 +158,7 @@ const EventiPage = () => {
               )}
             </Row>
             {/* Bottone "Mostra di più" */}
-            {totalPages > 1 && currentPage + 1 < totalPages && (
+            {totalPages > 1 && currentPage + 1 < totalPages && !isFiltered && (
               <div className="d-flex justify-content-center my-5">
                 <Button variant="link" className="text-black fs-5" onClick={handleShowMore} disabled={loading}>
                   {loading ? "Caricamento..." : "Mostra di più"}

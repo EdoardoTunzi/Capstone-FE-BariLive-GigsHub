@@ -23,6 +23,8 @@ const EventoCard = ({ titolo, partecipazione, evento, handleReload }) => {
     });
     return formattedDate.replace(/^\w/, (c) => c.toUpperCase());
   };
+  //Formatta ora
+  const formatTime = (time) => time.split(":").slice(0, 2).join(":");
 
   // Fetch per creare partecipazione
   const handlePartecipazione = async (eventoId, statoPartecipazione) => {
@@ -148,7 +150,7 @@ const EventoCard = ({ titolo, partecipazione, evento, handleReload }) => {
             </p>
           </div>
           <p className="text-capitalize mb-1">
-            <strong>Data:</strong> {formatDate(evento.data)}
+            <strong>Data:</strong> {formatDate(evento.data)} - {formatTime(evento.ora)}
           </p>
           <p className="mb-1">
             <strong>Prezzo:</strong> {evento.prezzoIngresso}

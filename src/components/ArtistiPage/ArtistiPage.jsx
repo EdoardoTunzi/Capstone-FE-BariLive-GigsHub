@@ -50,6 +50,8 @@ const ArtistiPage = () => {
         let artistiFiltrati = await response.json();
         setArtisti(artistiFiltrati);
         setIsFiltered(true);
+        setCurrentPage(0); // Resetta la paginazione
+        setTotalPages(1);
       } else {
         throw new Error("Errore nel filtraggio degli artisti");
       }
@@ -65,7 +67,8 @@ const ArtistiPage = () => {
     setFiltro("");
     setQuery("");
     setIsFiltered(false);
-    getAllBands();
+    setArtisti([]);
+    getAllBands(0);
   };
   //gestione tasto mostra di più
   const handleShowMore = () => {
@@ -128,7 +131,7 @@ const ArtistiPage = () => {
               )}
             </Row>
             {/* Bottone "Mostra di più" */}
-            {totalPages > 1 && currentPage + 1 < totalPages && (
+            {totalPages > 1 && currentPage + 1 < totalPages && !isFiltered && (
               <div className="d-flex justify-content-center my-5">
                 <Button variant="link" className="text-black fs-5" onClick={handleShowMore} disabled={loading}>
                   {loading ? "Caricamento..." : "Mostra di più"}
