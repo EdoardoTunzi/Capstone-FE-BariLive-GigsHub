@@ -3,10 +3,42 @@ import BandCard from "../../BandCard/BandCard";
 import { Button, Container } from "react-bootstrap";
 import LoadingSpinner from "../../Spinner/LoadingSpinner";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
 
 const BandGrid = () => {
   const [bands, setBands] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2, // Mostra 2 card già da iPad mini
+          slidesToScroll: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
 
   const fetchBands = async () => {
     setLoading(true);
@@ -34,19 +66,24 @@ const BandGrid = () => {
   }, []);
 
   return (
-    <Container className="p-0 ">
+    <Container className="p-0 mb-5">
       <div className="d-flex align-items-start mb-4 border-bottom border-black border-5 pb-3">
         <h2 className="fs-2">Artisti del momento</h2>
         <Button variant="dark" as={Link} to={"/artisti"} className="ms-auto fs-5 bg-black">
           Vedi tutti
         </Button>
       </div>
-
-      <div className="scroll-container">
-        <div className="scroll-content d-flex gap-4 ">
-          {loading ? <LoadingSpinner /> : bands && bands.slice(0, 10).map((band) => <BandCard key={band.id} band={band} />)}
-        </div>
-      </div>
+      {loading ? (
+        <LoadingSpinner />
+      ) : (
+        <Slider {...settings} className="carousel-container">
+          {bands &&
+            bands
+              .slice(0, 10)
+              .sort((a, b) => b.id - a.id)
+              .map((band) => <BandCard key={band.id} band={band} />)}
+        </Slider>
+      )}{" "}
     </Container>
   );
 };

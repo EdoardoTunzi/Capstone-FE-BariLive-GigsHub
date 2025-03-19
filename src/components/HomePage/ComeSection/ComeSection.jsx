@@ -1,18 +1,17 @@
 import { Container, Row, Col } from "react-bootstrap";
-import { Heart, MusicNote, SearchHeart, Ticket } from "react-bootstrap-icons";
-import { BsBookmarkHeart } from "react-icons/bs";
-import { ImSearch } from "react-icons/im";
+import { BsBookmarkHeart, BsSearch } from "react-icons/bs";
 import { LuHandMetal } from "react-icons/lu";
 import { TbMusicSearch } from "react-icons/tb";
+import "./Come.css";
 
 const ComeSection = () => {
   return (
-    <section className="comeFunziona">
-      <Container className="my-5  ">
-        {/* <h2 className="fs-2 ">Come funziona</h2> */}
-        <Row className="gy-4 mt-5 text-center">
+    <section className="come-funziona">
+      <Container className="my-5 text-center">
+        <h2 className="fs-2 mb-5">Registrati per scoprire in modo semplice artisti ed eventi a Bari!</h2>
+        <Row className="gy-4 my-5 text-center">
           <Col xs={12} md={6} lg={3}>
-            <ImSearch size={50} className="mb-3 " />
+            <BsSearch size={50} className="mb-3 " />
             <h5>Trova eventi</h5>
             <p>Cerca concerti per genere, data e location.</p>
           </Col>

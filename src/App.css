@@ -22,7 +22,7 @@ body {
   cursor: pointer;
 }
 
-/* Elimina il colore celeste di default dagli accordion in tutto il sito */
+/*------- Elimina il colore celeste di default dagli accordion in tutto il sito -------*/
 .accordion-button:focus {
   box-shadow: none !important;
   background-color: white !important;
@@ -34,4 +34,19 @@ td {
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 150px; /* Imposta una larghezza massima */
+}
+/* ------- Gestione React Slick in BandGrid e MostPopularGrid in homepage ------- */
+.slick-slide {
+  padding: 0 10px;
+  margin-block: 20px; /* Per aggiungere un gap tra le card */
+}
+@media (max-width: 480px) {
+  .slick-slide {
+    padding: 0 45px; /* Per gestire centratura card su mobile */
+  }
+}
+@media (min-width: 480px) and (max-width: 768px) {
+  .slick-slide {
+    padding: 0 10px;
+  }
 }
