@@ -1,7 +1,8 @@
 import { Col, Container, Nav, Row } from "react-bootstrap";
-import { Facebook, Instagram, Twitter } from "react-bootstrap-icons";
+import { Facebook, Instagram } from "react-bootstrap-icons";
 import "./Footer.css";
 import { Link } from "react-router-dom";
+import { FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -42,7 +43,7 @@ const Footer = () => {
                 <Instagram size={24} />
               </Nav.Link>
               <Nav.Link href="https://www.twitter.com" className=" mx-2" target="_blank">
-                <Twitter size={24} />
+                <FaXTwitter size={24} />
               </Nav.Link>
             </div>
           </Col>
