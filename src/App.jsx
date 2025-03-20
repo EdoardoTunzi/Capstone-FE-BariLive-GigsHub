@@ -10,11 +10,13 @@ import ArtistiPage from "./components/ArtistiPage/ArtistiPage";
 import EventiPage from "./components/EventiPage/EventiPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import BackOffice from "./components/AdminBackoffice/Backoffice";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <>
       <BrowserRouter>
+        <ScrollToTop />
         <MyNavBar />
         <Routes>
           <Route path="/" element={<HomePage />} />
