@@ -42,6 +42,7 @@ const ProfilePage = () => {
   };
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
 
   /* modale avatar change */
   const [selectedFile, setSelectedFile] = useState(null);
@@ -365,7 +366,7 @@ const ProfilePage = () => {
                 required
               />
               <span className="outline-secondary d-inline-block btn-pointer" onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi passwords" : "Mostra passwords"}
+                {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi password" : "Mostra password"}
               </span>
             </Form.Group>
             <Form.Group className="mb-3">
@@ -374,11 +375,11 @@ const ProfilePage = () => {
                 className="shadow-black bs-dark-border-subtle"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                type={showPassword ? "text" : "password"}
+                type={showPassword2 ? "text" : "password"}
                 required
               />
-              <span className="outline-secondary d-inline-block btn-pointer" onClick={() => setShowPassword(!showPassword)}>
-                {showPassword ? <FaEyeSlash /> : <FaEye />} {showPassword ? "Nascondi passwords" : "Mostra passwords"}
+              <span className="outline-secondary d-inline-block btn-pointer" onClick={() => setShowPassword2(!showPassword2)}>
+                {showPassword2 ? <FaEyeSlash /> : <FaEye />} {showPassword2 ? "Nascondi password" : "Mostra password"}
               </span>
             </Form.Group>
           </Form>

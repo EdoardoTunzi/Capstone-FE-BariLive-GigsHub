@@ -18,7 +18,7 @@ const Stats = ({ utenti, eventi, bands }) => {
       </div>
       <div className="band/artisti text-center m-3">
         <GiGuitar size={30} />
-        <p className="mb-0 mt-2">Artisti</p>
+        <p className="mb-0 mt-2">Band</p>
         <p className="fs-3 fw-bold mb-0">{bands.length}</p>
       </div>
     </div>

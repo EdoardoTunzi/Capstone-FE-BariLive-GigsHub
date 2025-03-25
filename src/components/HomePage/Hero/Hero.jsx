@@ -97,7 +97,7 @@ const Hero = () => {
           {error && <Alert variant="danger">{error}</Alert>}
           {success ? (
             <div className="d-flex flex-wrap align-items-center justify-content-center px-3 py-5">
-              <img src={"/src/assets/success.gif"} alt="success animation" style={{ width: 220 }} />
+              <img src={"/src/assets/success.gif"} alt="success animation" style={{ width: 180 }} />
               <p className="text-center fs-4 mt-5">{success}</p>
             </div>
           ) : (
