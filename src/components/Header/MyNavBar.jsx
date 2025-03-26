@@ -97,7 +97,7 @@ const MyNavBar = () => {
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" onClick={() => setExpanded(!expanded)} />
             <Navbar.Collapse id="basic-navbar-nav" className="me-0">
-              <Nav className="me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }}>
+              <Nav className=" text-center text-md-start me-auto my-2 my-lg-0" style={{ maxHeight: "100px" }}>
                 <Nav.Link as={Link} to={"/"} className="text-white me-2" onClick={() => setExpanded(false)}>
                   HOME
                 </Nav.Link>
@@ -108,21 +108,23 @@ const MyNavBar = () => {
                   ARTISTI
                 </Nav.Link>
                 {user && user.ruolo == "ADMIN" && (
-                  <Nav.Link as={Link} to={"/backoffice"} className="text-white" onClick={() => setExpanded(false)}>
+                  <Nav.Link as={Link} to={"/backoffice"} className="text-white me-2" onClick={() => setExpanded(false)}>
                     BACKOFFICE
                   </Nav.Link>
                 )}
               </Nav>
               {user ? (
-                <div className="my-4 my-md-0 ms-auto d-flex align-items-center justify-content-center gap-2 ">
-                  <Button className="border rounded-pill fw-semi-bold px-4" variant="light" as={Link} to={"/myhub"} onClick={() => setExpanded(false)}>
-                    My HUB{" "}
-                  </Button>
-                  <div
-                    className="rounded-circle border border-white border-2 overflow-hidden d-flex align-items-center justify-content-center"
-                    style={{ width: 50, height: 50 }}
-                  >
-                    <img className="w-100 h-100 object-fit-cover" src={user.avatar} alt="avatar del profilo utente" />
+                <div className="mt-3 pt-1 pt-md-0 mt-md-0">
+                  <div className="my-5 my-md-0 ms-auto d-flex align-items-center justify-content-center gap-2 ">
+                    <Button className="border rounded-pill fw-semi-bold px-4" variant="light" as={Link} to={"/myhub"} onClick={() => setExpanded(false)}>
+                      My HUB{" "}
+                    </Button>
+                    <div
+                      className="rounded-circle border border-white border-2 overflow-hidden d-flex align-items-center justify-content-center"
+                      style={{ width: 50, height: 50 }}
+                    >
+                      <img className="w-100 h-100 object-fit-cover" src={user.avatar} alt="avatar del profilo utente" />
+                    </div>
                   </div>
                 </div>
               ) : (
