@@ -39,7 +39,7 @@ Da questa esigenza personale è nata l’idea di un sito che raccogliesse in un 
 - Lombok 
 - Validation 
 
-Link alla repo: https://github.com/EdoardoTunzi/Capstone-BLGH-BE
+Link alla repo del backend: https://github.com/EdoardoTunzi/Capstone-BLGH-BE
 ---
 
 ## 🎨 UI/UX Design
