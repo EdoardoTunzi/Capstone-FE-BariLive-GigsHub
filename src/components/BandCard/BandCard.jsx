@@ -14,7 +14,7 @@ const BandCard = ({ band }) => {
 
   return (
     <>
-      <Card className="border-0 bandCard" onClick={user ? handleShow : null} style={{ cursor: user ? "pointer" : "default" }}>
+      <Card className="border-0 bandCard mx-auto" onClick={user ? handleShow : null} style={{ cursor: user ? "pointer" : "default" }}>
         <Card.Img variant="top" src={band.fotoBand} className=" rounded-0" />
         <Card.Body className="p-0 mt-2">
           <Card.Title className="text-uppercase m-0 fs-5">{band.nomeBand}</Card.Title>

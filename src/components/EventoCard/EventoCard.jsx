@@ -115,7 +115,7 @@ const EventoCard = ({ titolo, partecipazione, evento, handleReload }) => {
 
   return (
     <>
-      <Card className="border-0 eventCard" onClick={user ? handleShow : null} style={{ cursor: user ? "pointer" : "default" }}>
+      <Card className="border-0 eventCard mx-auto" onClick={user ? handleShow : null} style={{ cursor: user ? "pointer" : "default" }}>
         <div className="position-relative">
           <Card.Img variant="top" src={evento.locandina} className="rounded-0 " />
           <div className="position-absolute bottom-0 start-0 bg-black text-light fw-bold px-3 py-1 rounded-top text-capitalize">{formatDate(evento.data)}</div>
