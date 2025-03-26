@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Accordion, Button, Form, Modal, Table, Toast } from "react-bootstrap";
 import { BsCalendarEvent } from "react-icons/bs";
 import { FaRegEdit } from "react-icons/fa";
+import { IoWarningOutline } from "react-icons/io5";
 import { LiaClipboardListSolid } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
@@ -20,6 +21,15 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
     setSelectedEvent(event);
     setEditedEvent({ ...event }); // Clona i dati per modificarli
     setShowEditModal(true);
+    setMessage("");
+  };
+
+  /* modale delete */
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const handleCloseDelete = () => setShowDeleteModal(false);
+  const handleShowDelete = (event) => {
+    setSelectedEvent(event);
+    setShowDeleteModal(true);
     setMessage("");
   };
 
@@ -104,30 +114,29 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
   };
 
   // Funzione per eliminare un evento
-  const handleDelete = async (id) => {
-    if (window.confirm("Sei sicuro di voler eliminare questo evento?")) {
-      try {
-        const response = await fetch(`http://localhost:8080/admin/evento/${id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-
-        const responseText = await response.text();
-
-        if (response.ok) {
-          setMessage(responseText || "Evento eliminato con successo");
-          getAllEventi(); //faccio un refresh degli eventi nel componente padre
-          setTimeout(() => {
-            setMessage("");
-          }, 20000);
-        } else {
-          throw new Error(responseText || "Errore sconosciuto");
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/admin/evento/${selectedEvent.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      } catch (error) {
-        console.error("Errore nell'eliminazione:", error);
+      });
+
+      const responseText = await response.text();
+
+      if (response.ok) {
+        setMessage(responseText || "Evento eliminato con successo");
+        getAllEventi(); //faccio un refresh degli eventi nel componente padre
+        setShowDeleteModal(false);
+        setTimeout(() => {
+          setMessage("");
+        }, 20000);
+      } else {
+        throw new Error(responseText || "Errore sconosciuto");
       }
+    } catch (error) {
+      console.error("Errore nell'eliminazione:", error);
     }
   };
 
@@ -263,7 +272,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
                           <Button className="me-2" variant="warning" size="sm" onClick={() => handleEditClick(event)}>
                             <FaRegEdit />
                           </Button>{" "}
-                          <Button className="" variant="danger" size="sm" onClick={() => handleDelete(event.id)}>
+                          <Button className="" variant="danger" size="sm" onClick={() => handleShowDelete(event)}>
                             <RiDeleteBin6Line />
                           </Button>
                         </td>
@@ -362,6 +371,30 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
           </Button>
           <Button variant="dark" onClick={handleUpdateEventDetails}>
             Salva Modifiche
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      {/* Modale delete account */}
+      <Modal show={showDeleteModal} onHide={handleCloseDelete} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {" "}
+            <IoWarningOutline /> Elimina evento
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-5 text-center">
+          <p>
+            Questa azione è <strong>irreversibile</strong>.
+          </p>
+          <p>Sei sicuro di voler procedere?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDelete}>
+            Annulla
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Elimina evento
           </Button>
         </Modal.Footer>
       </Modal>

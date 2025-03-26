@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Accordion, Button, Table, Toast } from "react-bootstrap";
+import { Accordion, Button, Modal, Table, Toast } from "react-bootstrap";
+import { IoWarningOutline } from "react-icons/io5";
 import { LiaClipboardListSolid } from "react-icons/lia";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
@@ -7,31 +8,40 @@ import { useSelector } from "react-redux";
 const UtentiBO = ({ utenti, getAllUtenti }) => {
   const token = useSelector((state) => state.token);
   const [message, setMessage] = useState("");
+  const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleDelete = async (id) => {
-    if (window.confirm("Sei sicuro di voler eliminare questo utente?")) {
-      try {
-        const response = await fetch(`http://localhost:8080/admin/utente/${id}`, {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
+  /* Modale delete */
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const handleCloseDelete = () => setShowDeleteModal(false);
+  const handleShowDelete = (utente) => {
+    setSelectedUser(utente);
+    setShowDeleteModal(true);
+    setMessage("");
+  };
 
-        const responseText = await response.text();
-
-        if (response.ok) {
-          setMessage(responseText || "Utente eliminato con successo");
-          getAllUtenti(); //faccio un refresh degli eventi nel componente padre
-          setTimeout(() => {
-            setMessage("");
-          }, 20000);
-        } else {
-          throw new Error(responseText || "Errore sconosciuto");
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/admin/utente/${selectedUser.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
         }
-      } catch (error) {
-        console.error("Errore nell'eliminazione:", error);
+      });
+
+      const responseText = await response.text();
+
+      if (response.ok) {
+        setMessage(responseText || "Utente eliminato con successo");
+        getAllUtenti(); //faccio un refresh degli eventi nel componente padre
+        setShowDeleteModal(false);
+        setTimeout(() => {
+          setMessage("");
+        }, 20000);
+      } else {
+        throw new Error(responseText || "Errore sconosciuto");
       }
+    } catch (error) {
+      console.error("Errore nell'eliminazione:", error);
     }
   };
 
@@ -62,7 +72,7 @@ const UtentiBO = ({ utenti, getAllUtenti }) => {
                     .map((utente) => (
                       <tr key={utente.id}>
                         <td className="text-center">
-                          <Button variant="danger" size="sm" onClick={() => handleDelete(utente.id)}>
+                          <Button variant="danger" size="sm" onClick={() => handleShowDelete(utente)}>
                             <RiDeleteBin6Line />
                           </Button>
                         </td>
@@ -84,6 +94,30 @@ const UtentiBO = ({ utenti, getAllUtenti }) => {
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
+
+      {/* Modale delete utente */}
+      <Modal show={showDeleteModal} onHide={handleCloseDelete} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            {" "}
+            <IoWarningOutline /> Elimina utente
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-5 text-center">
+          <p>
+            Questa azione è <strong>irreversibile</strong>.
+          </p>
+          <p>Sei sicuro di voler procedere?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDelete}>
+            Annulla
+          </Button>
+          <Button variant="danger" onClick={handleDelete}>
+            Elimina utente
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <Toast
         show={!!message}
