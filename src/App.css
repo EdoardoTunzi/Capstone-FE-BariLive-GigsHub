@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  font-family: "Roboto Condensed", sans-serif;
+}
+/* Elimina il colore celeste di default dagli input form in tutto il sito */
+.form-control:focus {
+  border-color: lightgray !important;
+  box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.17) !important;
+}
+/* imposta uno sfondo personalizzato all'apertura dei modali */
+.modal-bg {
+  background-color: rgba(210, 208, 208, 0.632);
+}
+/* imposta altezza standard in tutti i container per evitare il collapse del footer con pagine semi vuote */
+.container-vh {
+  margin-top: 120px;
+  min-height: 100vh;
+}
+/* utilizzato per assegnare un pointer in alcuni bottoni custom(password form) */
+.btn-pointer {
+  cursor: pointer;
+}
+
+/*------- Elimina il colore celeste di default dagli accordion in tutto il sito -------*/
+.accordion-button:focus {
+  box-shadow: none !important;
+  background-color: white !important;
+  color: black;
+  border-color: inherit !important;
+}
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 150px; /* Imposta una larghezza massima */
+}
+/* ------- Gestione React Slick in BandGrid e MostPopularGrid in homepage ------- */
+.slick-slide {
+  padding: 0 10px;
+  margin-block: 20px; /* Per aggiungere un gap tra le card */
+}
+@media (max-width: 480px) {
+  .slick-slide {
+    padding: 0 45px; /* Per gestire centratura card su mobile */
+  }
+}
+@media (min-width: 480px) and (max-width: 768px) {
+  .slick-slide {
+    padding: 0 10px;
+  }
+}

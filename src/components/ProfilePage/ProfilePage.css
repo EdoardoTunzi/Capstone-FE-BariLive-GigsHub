@@ -1,0 +1,11 @@
+.editAvatar {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transform: translate(-10%, -10%);
+  font-size: 30px;
+  cursor: pointer;
+}
