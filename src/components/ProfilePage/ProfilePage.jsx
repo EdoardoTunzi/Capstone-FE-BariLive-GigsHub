@@ -90,16 +90,13 @@ const ProfilePage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        //qui estraggo solo gli eventi dall'array delle partecipazioni
-        const eventiEstratti = data.content.map((partecipazione) => partecipazione.evento);
-        console.log(eventiEstratti);
-
+        //qui assegno gli array delle partecipazioni alle variabili specifiche per stato partecipazione che passo come parametro.(in useEffect)
         setState(data.content);
       } else {
         throw new Error("Errore nel caricamento degli eventi dalle partecipazioni");
       }
     } catch (error) {
-      console.log("Errore: ", error);
+      console.error("Errore: ", error);
     }
   };
 
@@ -141,7 +138,7 @@ const ProfilePage = () => {
         setSuccess(null);
       }, 2000);
     } catch (error) {
-      console.log("Errore: ", error);
+      console.error("Errore: ", error);
       setError(error.message);
     }
   };
@@ -189,7 +186,7 @@ const ProfilePage = () => {
         setSelectedFile(null);
       }, 2000); */
     } catch (error) {
-      console.log("Errore: " + error);
+      console.error("Errore: " + error);
       setError(error.message);
     }
   };
@@ -232,7 +229,7 @@ const ProfilePage = () => {
         handleCloseEdit();
       }, 2000);
     } catch (error) {
-      console.log("Errore: ", error);
+      console.error("Errore: ", error);
       setError(error.message);
     }
   };
@@ -338,6 +335,7 @@ const ProfilePage = () => {
           <LoadingSpinner />
         ) : (
           <>
+            {/* qui passo al componente gli array delle partecipazioni, nel componente poi estraggo gli eventi collegati */}
             <PartecipazioniGrid titolo="Eventi a cui parteciperai" partecipazioni={partecipero} handleReload={handleReload} />
             <PartecipazioniGrid titolo="Eventi che ti interessano" partecipazioni={miInteressa} handleReload={handleReload} />
             <PartecipazioniGrid titolo="Eventi a cui hai partecipato" partecipazioni={partecipato} handleReload={handleReload} />

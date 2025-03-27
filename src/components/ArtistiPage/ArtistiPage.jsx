@@ -31,7 +31,7 @@ const ArtistiPage = () => {
         throw new Error("Errore nel caricamento delle bands");
       }
     } catch (error) {
-      console.log("Errore: " + error);
+      console.error("Errore: " + error);
     } finally {
       setLoading(false); // Quando il fetch è terminato, nasconde lo spinner
     }
@@ -56,7 +56,7 @@ const ArtistiPage = () => {
         throw new Error("Errore nel filtraggio degli artisti");
       }
     } catch (error) {
-      console.log("Errore: " + error);
+      console.error("Errore: " + error);
     } finally {
       setLoading(false);
     }

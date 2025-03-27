@@ -8,9 +8,9 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 const EventiBO = ({ eventi, bands, getAllEventi }) => {
   const token = useSelector((state) => state.token);
-
   const [newEvent, setNewEvent] = useState(null);
 
+  //Modale di modifica
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [editedEvent, setEditedEvent] = useState({});
@@ -24,7 +24,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
     setMessage("");
   };
 
-  /* modale delete */
+  // Modale delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const handleCloseDelete = () => setShowDeleteModal(false);
   const handleShowDelete = (event) => {
@@ -143,7 +143,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
   return (
     <>
       <Accordion flush>
-        {/* Sezione Creazione Evento */}
+        {/* Sezione creazione nuovo Evento */}
         <Accordion.Item eventKey="0">
           <Accordion.Header>
             <BsCalendarEvent /> <p className="m-0 ms-2 fw-bold">Aggiungi Evento</p>
@@ -225,6 +225,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
               <Form.Group>
                 <Form.Label>Band</Form.Label>
                 <Form.Select value={newEvent?.bandId || ""} onChange={(e) => setNewEvent({ ...newEvent, bandId: e.target.value })}>
+                  {/* Select a tendina per le band esistenti */}
                   <option value="">Seleziona una band...</option>
                   {bands.map((band) => (
                     <option key={band.id} value={band.id}>
@@ -330,6 +331,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
                 value={editedEvent.band?.id || ""}
                 onChange={(e) => setEditedEvent({ ...editedEvent, band: { ...editedEvent.band, id: e.target.value } })}
               >
+                {/* Select a tendina per le band esistenti */}
                 <option value="">Seleziona una band...</option>
                 {bands.map((band) => (
                   <option key={band.id} value={band.id}>
@@ -401,6 +403,7 @@ const EventiBO = ({ eventi, bands, getAllEventi }) => {
 
       {/* Toast per notifiche */}
       <Toast
+        // !! -> serve a convertire il valore di message in un booleano, stringa piena(truthy) = true; stringa vuota, null o undefined(falsy) = false
         show={!!message}
         onClose={() => setMessage("")}
         delay={20000}

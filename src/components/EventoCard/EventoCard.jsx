@@ -56,7 +56,7 @@ const EventoCard = ({ titolo, partecipazione, evento, handleReload }) => {
         }
       }
     } catch (error) {
-      console.log("Errore nella creazione o modifica partecipazione. " + error);
+      console.error("Errore nella creazione o modifica partecipazione. " + error);
       setMessage("Errore di rete, riprova più tardi");
     }
   };

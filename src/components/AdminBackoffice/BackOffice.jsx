@@ -1,4 +1,4 @@
-import { Accordion, Button, Container, Nav, Tab } from "react-bootstrap";
+import { Container, Nav, Tab } from "react-bootstrap";
 import { BsCalendarEvent } from "react-icons/bs";
 import { FaUser } from "react-icons/fa6";
 import { GiGuitar } from "react-icons/gi";
@@ -22,7 +22,6 @@ const BackOffice = () => {
       const response = await fetch("http://localhost:8080/admin/utenti", { headers: { Authorization: `Bearer ${token}` } });
       if (response.ok) {
         const listaUtenti = await response.json();
-        console.log(listaUtenti.content);
         setUtenti(listaUtenti.content);
       }
     } catch (error) {
@@ -33,16 +32,14 @@ const BackOffice = () => {
   const getAllEventi = async () => {
     try {
       const response = await fetch("http://localhost:8080/eventi");
-
       if (response.ok) {
-        let listaEventi = await response.json();
-        console.log(listaEventi.content);
+        const listaEventi = await response.json();
         setEventi(listaEventi.content);
       } else {
         throw new Error("Errore nel caricamento degli eventi");
       }
     } catch (error) {
-      console.log("Errore: " + error);
+      console.error("Errore: " + error);
     }
   };
   //fetch bands
@@ -51,7 +48,6 @@ const BackOffice = () => {
       const response = await fetch("http://localhost:8080/bands", { headers: { Authorization: `Bearer ${token}` } });
       if (response.ok) {
         const listaBands = await response.json();
-        console.log(listaBands.content);
         setBands(listaBands.content);
       }
     } catch (error) {

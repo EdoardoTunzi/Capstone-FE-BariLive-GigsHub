@@ -37,7 +37,7 @@ const EventiPage = () => {
         throw new Error("Errore nel caricamento degli eventi");
       }
     } catch (error) {
-      console.log("Errore: " + error);
+      console.error("Errore: " + error);
     } finally {
       setLoading(false); // Quando il fetch è terminato, nasconde lo spinner
     }
@@ -69,7 +69,7 @@ const EventiPage = () => {
         throw new Error("Errore nel filtrare gli eventi");
       }
     } catch (error) {
-      console.log("Errore: " + error);
+      console.error("Errore: " + error);
     } finally {
       setLoading(false); // Quando il fetch è terminato, nasconde lo spinner
     }

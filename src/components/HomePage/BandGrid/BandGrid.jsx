@@ -52,13 +52,13 @@ const BandGrid = () => {
         if (bands) {
           setBands(bands.content);
         } else {
-          console.log("Error: data not found");
+          console.error("Error: data not found");
         }
       } else {
         throw new Error("Error in fetching bands data");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false); // Quando il fetch è terminato, nasconde lo spinner
     }
@@ -70,7 +70,7 @@ const BandGrid = () => {
 
   return (
     <Container className="p-0 mb-5">
-      <div className="d-flex align-items-start mb-4 border-bottom border-black border-5 pb-3">
+      <div className="d-flex align-items-start mb-4 border-bottom border-black border-4 pb-3">
         <h2 className="fs-2">Artisti del momento</h2>
         <Button variant="dark" as={Link} to={"/artisti"} className="ms-auto fs-5 bg-black">
           Vedi tutti

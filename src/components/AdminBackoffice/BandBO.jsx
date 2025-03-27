@@ -12,6 +12,7 @@ const BandBO = ({ bands, getAllBands }) => {
   const [newBand, setNewBand] = useState(null);
   const [message, setMessage] = useState("");
 
+  // Modale modifica
   const [showEditModal, setShowEditModal] = useState(false);
   const [selectedBand, setSelectedBand] = useState(null);
   const [editedBand, setEditedBand] = useState({});
@@ -24,7 +25,7 @@ const BandBO = ({ bands, getAllBands }) => {
     setMessage("");
   };
 
-  /* Modale delete */
+  // Modale delete
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const handleCloseDelete = () => setShowDeleteModal(false);
   const handleShowDelete = (band) => {
@@ -33,7 +34,7 @@ const BandBO = ({ bands, getAllBands }) => {
     setMessage("");
   };
 
-  // Fetch per modifica band -- IMPLEMENTAAAAAAAAAAAAAAAAA
+  // Fetch per modifica band
   const handleUpdateBandDetails = async () => {
     try {
       const response = await fetch(`http://localhost:8080/admin/band/${selectedBand.id}`, {
@@ -122,7 +123,7 @@ const BandBO = ({ bands, getAllBands }) => {
   return (
     <>
       <Accordion flush>
-        {/* Sezione per aggiungere band */}
+        {/* Sezione per aggiungere nuova band */}
         <Accordion.Item eventKey="0">
           <Accordion.Header>
             <TbMusicPlus /> <p className="m-0 ms-1 fw-bold">Nuova band</p>
@@ -138,7 +139,6 @@ const BandBO = ({ bands, getAllBands }) => {
                   onChange={(e) => setNewBand({ ...newBand, nomeBand: e.target.value })}
                 />
               </Form.Group>
-
               <Form.Group>
                 <Form.Label>Bio</Form.Label>
                 <Form.Control
@@ -279,7 +279,7 @@ const BandBO = ({ bands, getAllBands }) => {
                     ))
                 ) : (
                   <tr>
-                    <td colSpan="4">Nessun bando trovato</td>
+                    <td colSpan="4">Nessuna band trovata</td>
                   </tr>
                 )}
               </tbody>
@@ -288,7 +288,7 @@ const BandBO = ({ bands, getAllBands }) => {
         </Accordion.Item>
       </Accordion>
 
-      {/* Modale di modifica Band---------------------------- MODIFICA MODALE FORM--------------*/}
+      {/* Modale di modifica Band */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>Modifica Band: ID {editedBand.id}</Modal.Title>
@@ -378,6 +378,7 @@ const BandBO = ({ bands, getAllBands }) => {
 
       {/* Toast per notifiche */}
       <Toast
+        // !! -> serve a convertire il valore di message in un booleano, stringa piena(truthy) = true; stringa vuota, null o undefined(falsy) = false
         show={!!message}
         onClose={() => setMessage("")}
         delay={20000}

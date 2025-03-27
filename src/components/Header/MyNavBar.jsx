@@ -72,7 +72,7 @@ const MyNavBar = () => {
         throw new Error("Errore nel recupero dettagli utente");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

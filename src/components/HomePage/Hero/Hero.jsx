@@ -62,7 +62,7 @@ const Hero = () => {
         handleClose();
       }, 4500);
     } catch (error) {
-      console.log(error.message);
+      console.error(error.message);
 
       setError(error.message);
     } finally {

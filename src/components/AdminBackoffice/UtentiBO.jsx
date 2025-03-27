@@ -18,7 +18,7 @@ const UtentiBO = ({ utenti, getAllUtenti }) => {
     setShowDeleteModal(true);
     setMessage("");
   };
-
+  /* Fetch delete account */
   const handleDelete = async () => {
     try {
       const response = await fetch(`http://localhost:8080/admin/utente/${selectedUser.id}`, {

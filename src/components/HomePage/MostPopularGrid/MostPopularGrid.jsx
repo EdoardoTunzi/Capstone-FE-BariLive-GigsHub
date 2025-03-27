@@ -52,13 +52,13 @@ const MostPopularGrid = () => {
         if (eventi) {
           setEventi(eventi.content);
         } else {
-          console.log("Errore: eventi non trovati");
+          console.error("Errore: eventi non trovati");
         }
       } else {
         throw new Error("Error in fetching events data");
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false); // Quando il fetch è terminato, nasconde lo spinner
     }
@@ -70,7 +70,7 @@ const MostPopularGrid = () => {
 
   return (
     <Container className="my-5 p-0">
-      <div className="d-flex align-items-start mb-4 border-bottom border-black border-5 pb-3">
+      <div className="d-flex align-items-start mb-4 border-bottom border-black border-4 pb-3">
         <h2 className="fs-2">Eventi popolari</h2>
         <Button variant="dark" as={Link} to={"/eventi"} className="ms-auto fs-5 bg-black">
           Vedi tutti
