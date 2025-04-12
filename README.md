@@ -9,7 +9,7 @@ Bari Live è una piattaforma web pensata per **appassionati di musica live e ban
 La musica ha sempre avuto un ruolo centrale nella mia vita, specialmente gli eventi live, avendo io stesso un passato da musicista. Ho sempre trovato difficile restare aggiornato sui concerti underground della mia città, poiché molti eventi non vengono pubblicizzati adeguatamente o sono sparsi tra le varie pagine social dei locali o su piattaforme social a cui non tutti sono iscritti. Questo mi ha portato più volte a perdere occasioni di concerti a cui avrei voluto partecipare.
 Da questa esigenza personale è nata l’idea di un sito che raccogliesse in un unico spazio tutti gli eventi live, con un’attenzione particolare alla scena underground locale e alle sue band.
 
-![Guarda il video di presentazione del progetto](https://youtu.be/v2Nqrr85uEQ?si=iVdDk4Uzz4IHWyT3)
+[Guarda il video di presentazione del progetto](https://youtu.be/v2Nqrr85uEQ?si=iVdDk4Uzz4IHWyT3)
 
 ---
 
@@ -41,7 +41,7 @@ Da questa esigenza personale è nata l’idea di un sito che raccogliesse in un 
 - ![Lombok](https://img.shields.io/badge/Lombok-A61F20?style=for-the-badge&logo=lombok&logoColor=white)
 - ![Validation](https://img.shields.io/badge/Javax_Validation-ffb300?style=for-the-badge)
 
-![Link alla repo del backend](https://github.com/EdoardoTunzi/Capstone-BLGH-BE)
+[Link alla repo del backend](https://github.com/EdoardoTunzi/Capstone-BLGH-BE)
 ---
 
 ## 🎨 UI/UX Design
